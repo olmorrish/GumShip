@@ -1,123 +1,114 @@
-﻿//using System.Collections;
-//using System.Collections.Generic;
-//using UnityEngine;
+﻿using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
 
-//public class GameController : MonoBehaviour
-//{
-//    // Speed Will be Represented From 10 to 20 to 30;
-//    public float shipSpeed;
+public class GameController : MonoBehaviour {
+    // Speed Will be Represented From 10 to 20 to 30;
+    public float shipSpeed;
 
-//    public float tierOne = 10;
-//    public float tierTwo = 20;
-//    public float tierThree = 30;
-//    public float maxSpeed = 40;
+    public float tierOne = 10;
+    public float tierTwo = 20;
+    public float tierThree = 30;
+    public float maxSpeed = 40;
 
-//    public float speedDecayRate = 5;
+    public float speedDecayRate = 5;
 
-//    // What tier we are currently in
-//    public int currentTier = 1;
+    // What tier we are currently in
+    public int currentTier = 1;
 
-//    // Controlled in PlayerController Class
-//    public bool GoWasPressed;
+    // Controlled in PlayerController Class
+    public bool GoWasPressed;
 
-//    public float distanceTravelled;
-//    public int playerScore;
+    public float distanceTravelled;
+    public int playerScore;
 
-//    // What Distance the Next Enemy Attack will be Triggered At
-//    // This Distance is Randomly Generated 
-//    // The Spawn of Enemies Increases as a Function of the Player Score
-//    private float spawnDistance;
-//    private int lowerSpawnBound;
-//    private int upperSpawnBound;
+    // What Distance the Next Enemy Attack will be Triggered At
+    // This Distance is Randomly Generated 
+    // The Spawn of Enemies Increases as a Function of the Player Score
+    private float spawnDistance;
+    private int lowerSpawnBound;
+    private int upperSpawnBound;
 
-//    public float oxygenLevel;
+    public float oxygenLevel;
 
-//    public int unchewedGum;
-//    public bool gumReady;
+    public int unchewedGum;
+    public bool gumReady;
 
-//    private bool beingAttacked;
+    private bool beingAttacked;
 
-//    //private EnemyController enemyEncounter;
-
+    //private EnemyController enemyEncounter;
 
 
-//    //
 
-//    // Start is called before the first frame update
-//    void Start() {
-//        gumReady = false;
-//        GoWasPressed = false;
-//        playerScore = 0;
-//        shipSpeed = 0;
+    //
 
-//        updateSpawnDistance(); 
+    // Start is called before the first frame update
+    void Start() {
+        gumReady = false;
+        GoWasPressed = false;
+        playerScore = 0;
+        shipSpeed = 0;
 
-//    }
+        updateSpawnDistance();
 
-//    // Update is called once per frame
-//    void Update(){
+    }
 
-//        updateDistance();
+    // Update is called once per frame
+    void Update() {
 
-//        updateShipSpeed();
+        updateDistance();
 
-//        updateEnemySpawnRates();
+        updateShipSpeed();
 
-//        if (beingAttacked)
-//        {
-//            //enemyEncounter.updateEnemies();
-//        }
+        updateEnemySpawnRates();
 
-//        if (distanceTravelled < spawnDistance)
-//        {
-//            //enemyEncounter = new EnemyController;
-//        }
-        
-//    }
+        if (beingAttacked) {
+            //enemyEncounter.updateEnemies();
+        }
 
-////**********************************************************************************************************************
-//// Ship Movement
-////**********************************************************************************************************************
+        if (distanceTravelled < spawnDistance) {
+            //enemyEncounter = new EnemyController;
+        }
 
-//    void updateDistance()
-//    {
-//        distanceTravelled += shipSpeed;
-//        playerScore += (int)shipSpeed;
-//    }
+    }
 
-//    // Ship accelerates 5x faster then it decelerates
-//    void updateShipSpeed()
-//    {
-//        if (GoWasPressed)
-//        {
-//            shipSpeed += 5;
-//        }
-//        else
-//        {
-//            shipSpeed -= 1;
-//        }
-//    }
+    //**********************************************************************************************************************
+    // Ship Movement
+    //**********************************************************************************************************************
 
-////**********************************************************************************************************************
-//// Enemy Attacks
-////**********************************************************************************************************************
+    void updateDistance() {
+        distanceTravelled += shipSpeed;
+        playerScore += (int)shipSpeed;
+    }
 
-//    // After an attack updateSpawnDistance determines at what distance the next attack should be triggered
-//    private void updateSpawnDistance()
-//    {
-//        float nextInterval = Random.Range(lowerSpawnBound, upperSpawnBound);
-//        spawnDistance = distanceTravelled + nextInterval;
-//    }
+    // Ship accelerates 5x faster then it decelerates
+    void updateShipSpeed() {
+        if (GoWasPressed) {
+            shipSpeed += 5;
+        }
+        else {
+            shipSpeed -= 1;
+        }
+    }
 
-//    // How fast enemies spawn should ne a function of the player score
-//    private void updateEnemySpawnRates()
-//    {
-//        lowerSpawnBound = 80/playerScore;
-//        upperSpawnBound = 100/playerScore;
-//    }
+    //**********************************************************************************************************************
+    // Enemy Attacks
+    //**********************************************************************************************************************
 
-////**********************************************************************************************************************
-//// Ship Status
-////**********************************************************************************************************************
+    // After an attack updateSpawnDistance determines at what distance the next attack should be triggered
+    private void updateSpawnDistance() {
+        float nextInterval = Random.Range(lowerSpawnBound, upperSpawnBound);
+        spawnDistance = distanceTravelled + nextInterval;
+    }
 
-//}
+    // How fast enemies spawn should ne a function of the player score
+    private void updateEnemySpawnRates() {
+        lowerSpawnBound = 80 / playerScore;
+        upperSpawnBound = 100 / playerScore;
+    }
+
+    //**********************************************************************************************************************
+    // Ship Status
+    //**********************************************************************************************************************
+
+}
