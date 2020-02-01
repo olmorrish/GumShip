@@ -69,7 +69,7 @@ public class GameController : MonoBehaviour {
         oxygenLevel = 100;
 
         updateSpawnDistance();
-
+        /*
         animator = GetComponent<Animator>();
 
         animator.SetString("slow1", slow1);
@@ -82,14 +82,12 @@ public class GameController : MonoBehaviour {
 
         animator.SetString("fast1", fast1);
         animator.SetString("fast2", fast2);
-        animator.SetString("fast3", fast3);
+        animator.SetString("fast3", fast3);*/
     }
 
     // Update is called once per frame
 
     void FixedUpdate(){
-
-    void Update() {
 
         updateDistance();
 
@@ -118,7 +116,7 @@ public class GameController : MonoBehaviour {
         if (gunReady)
         {
             enemyEncounter = null;
-            animator.setBool("Blast", true);
+            //animator.setBool("Blast", true);
             clearEnemySprites();
             updateEnemySpawnRates();
             updateSpawnDistance();
@@ -310,7 +308,7 @@ public class GameController : MonoBehaviour {
     }
 
     private void updateEnemySprites()
-    {
+    {/*
         animator.SetString("slow1", slow1);
         animator.SetString("slow2", slow2);
         animator.SetString("slow3", slow3);
@@ -321,7 +319,7 @@ public class GameController : MonoBehaviour {
 
         animator.SetString("fast1", fast1);
         animator.SetString("fast2", fast2);
-        animator.SetString("fast3", fast3);
+        animator.SetString("fast3", fast3);*/
     }
 
 //**********************************************************************************************************************
