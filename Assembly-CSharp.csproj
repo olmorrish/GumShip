@@ -63,6 +63,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets\Scripts\GameController.cs" />
+    <Compile Include="Assets\Scripts\PlayerController.cs" />
     <Reference Include="Unity.Timeline.Editor">
       <HintPath>C:/Users/olive/Documents/Unity Projects/GumShip/Library/ScriptAssemblies/Unity.Timeline.Editor.dll</HintPath>
     </Reference>
