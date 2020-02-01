@@ -291,3 +291,4 @@
 /define:CSHARP_7_OR_LATER
 /define:CSHARP_7_3_OR_NEWER
 Assets\Scripts\GameController.cs
+Assets\Scripts\PlayerController.cs
