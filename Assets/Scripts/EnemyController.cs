@@ -18,12 +18,11 @@ public class EnemyController : MonoBehaviour
      */
 
 
+    //number of holes created by enemy attacks per "ship slot"
+    public int[3] numOfCreatedHolesPerSlot;
 
-    //used to access the associated arrays
-    static const int NARWHAL = 0, HAMMERHEAD = 1, WHALE = 2;
-
-    //number of holes created by enemy attacks, should get passed to gamecontroller
-    int numOfCreatedHoles;
+    float numberOfHolesCreated;
+ 
 
     float currentDistance;
 
@@ -31,57 +30,50 @@ public class EnemyController : MonoBehaviour
     //1 = narwhal
     //2 = hammerheads
     //3 = whale
-    public int[] typesOfEnemies = { 0, 0, 0 };
+    /// <summary>
+    /// This is the types of enemies present in each enemy "slot"
+    /// </summary>
+    public int[] typesOfEnemiesInSlots = { 0, 0, 0 };
 
-    //index 0 = narwhals
-    //index 1 = hammerheads
-    //index 2 = whales
-    public int[] numberOfEnemiesByType = { 0, 0, 0 };
 
     //creates the class, this will start the encounter as soon as its constructed
     public EnemyController(float distance)
     {
-        this.currentDistance = distance;
+        this.setup(distance);
         this.createEncounter();
         this.startEncounter();
     }  
 
-    //give certain score amounts for enemy types
-
-    //begins encounter
-    void startEncounter()
+    /// <summary>
+    /// Called in constructor, sets up the various variables for tracking
+    /// </summary>
+    void setup(float distance)
     {
+        this.currentDistance = distance;
+        typesOfEnemiesInSlots = (0, 0, 0);
+        numberOfEnemiesByType = (0, 0, 0);
+        numOfCreatedHolesPerSlot = (0, 0, 0);
 
     }
 
-    //called at end of encounter to clean up class
-    void endAttack()
-    {
-
-    }
-
-    // Update is called once per frame
-    void updateEnemies(float distance)
-    {
-        currentDistance = distance;
-        if(encounterActive) //process attacks
-        {
-
-        }
-    }
 
     //need to create encounter based off score/distance travelled for difficulty.
     //for now, always spawn 3 narwhals in slot 0
-    public void createEncounter() {
-        encounterActive = true;
-        typesOfEnemies[NARWHAL] = 1;
-        numberOfEnemiesByType[NARWHAL] = 3;
+    /// <summary>
+    /// Generates the enemies for the encounter, for now 1 narwhal in each slot
+    /// </summary>
+    void createEncounter() {
+        typesOfEnemiesInSlots = (1, 1, 1);
+        numberOfEnemiesByType = (1, 1, 1);
     }
 
-    public void updateAttack() { }
-
-    public void processDamageReceived()
-    {
+    /// <summary>
+    /// Should be called by gameController once per update. This processes the enemy attacks
+    /// </summary>
+    public void updateAttack() {
+        //for now we simply put 1 hole in slot 1
+        numOfCreatedHolesPerSlot = (1, 0, 0);
 
     }
+
 }
