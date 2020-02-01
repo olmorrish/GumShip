@@ -4,22 +4,6 @@ using UnityEngine;
 
 public class EnemyController : MonoBehaviour
 {
-    //TO DO
-    /*
-     * Clear up methods needed by roxannes class for this class to be useful, right now its a little ad hoc
-     * (attack, endAttack, updateEnemies, createEncounter, updateAttack, processDamageReceived)
-     * 
-     * Implement enemy generation
-     * 
-     * also use notes and music to clear your head
-     * 
-     * Switch this to object type, so it has a Start function
-     * This class gets created when the encounter starts and deleted when the encounter ends
-     */
-
-
-    //number of holes created by enemy attacks per "ship slot"
-    public int[3] numOfCreatedHolesPerSlot;
 
     float numberOfHolesCreated;
  
@@ -52,7 +36,7 @@ public class EnemyController : MonoBehaviour
         this.currentDistance = distance;
         typesOfEnemiesInSlots = (0, 0, 0);
         numberOfEnemiesByType = (0, 0, 0);
-        numOfCreatedHolesPerSlot = (0, 0, 0);
+        numberOfHolesCreated = 0;
 
     }
 
