@@ -1,81 +1,143 @@
-﻿//using System.Collections;
-//using System.Collections.Generic;
-//using UnityEngine;
+﻿using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
 
-//public class enemycontroller : MonoBehaviour {
-//    //to do
-//    /*
-//     * clear up methods needed by roxannes class for this class to be useful, right now its a little ad hoc
-//     * (attack, endattack, updateenemies, createencounter, updateattack, processdamagereceived)
-//     * 
-//     * implement enemy generation
-//     * 
-//     * also use notes and music to clear your head
-//     * 
-//     * switch this to object type, so it has a start function
-//     * this class gets created when the encounter starts and deleted when the encounter ends
-//     */
+public class EnemyController : MonoBehaviour
+{
+
+    float numberOfHolesCreated = 0;
+
+    int nextHit = 0;
+
+    bool[] attacking = { false, false, false };
+ 
+
+    float currentDistance = 0;
+
+    //0 = no enemies
+    //1 = narwhal
+    //2 = hammerheads
+    //3 = whale
+    /// <summary>
+    /// This is the types of enemies present in each enemy "slot"
+    /// </summary>
+    public int[] typesOfEnemiesInSlots = { 0, 0, 0 };
+
+
+    //creates the class, this will start the encounter as soon as its constructed
+    public EnemyController(float distance)
+    {
+        this.setup(distance);
+        this.createEncounter();
+    }  
+
+    /// <summary>
+    /// Called in constructor, sets up the various variables for tracking
+    /// </summary>
+    void setup(float distance)
+    {
+        this.currentDistance = distance;
+        for(int i = 0; i < 3; i++)
+        {
+            typesOfEnemiesInSlots[i] = 0;
+            attacking[i] = false;
+        }
+        numberOfHolesCreated = 0;
+
+    }
+
+
+    //need to create encounter based off score/distance travelled for difficulty.
+    //for now, always spawn 3 narwhals in slot 0
+    /// <summary>
+    /// Generates the enemies for the encounter, for now 1 narwhal in each slot
+    /// </summary>
+    void createEncounter() {
+        //make fancy calculations to do a semi random encounter generator based off distance and random chance
+        /* Early on should have overall just narwhals and simple fights
+         * 
+         * Im thinking distance thresholds for when to introduce new enemy types and
+         * possibly another threshold
+         * 
+         */
 
 
 
-//    //used to access the associated arrays
-//    static const int narwhal = 0, hammerhead = 1, whale = 2;
 
-//    //number of holes created by enemy attacks, should get passed to gamecontroller
-//    int numofcreatedholes;
+        typesOfEnemiesInSlots[0] = 1;
+        typesOfEnemiesInSlots[1] = 1;
+        typesOfEnemiesInSlots[2] = 1;
+    }
 
-//    float currentdistance;
+    /// <summary>
+    /// Should be called by gameController once per update. This processes the enemy attacks
+    /// </summary>
+    public void updateAttack() {
+        nextHit++;
 
-//    //0 = no enemies
-//    //1 = narwhal
-//    //2 = hammerheads
-//    //3 = whale
-//    public int[] typesofenemies = { 0, 0, 0 };
+        if (nextHit > 180)  //for now one hit every ~3 seconds
+        {
+            nextHit = 0;
 
-//    //index 0 = narwhals
-//    //index 1 = hammerheads
-//    //index 2 = whales
-//    public int[] numberofenemiesbytype = { 0, 0, 0 };
+            //go through enemies in slots, get total enemy amt
+            int totalEnemies = 0;
+            //index 0 = narwhal, 1 = hammerhead, 2 = whale
+            int[] numberOfEnemyPerType = { 0, 0, 0 };
 
-//    //creates the class, this will start the encounter as soon as its constructed
-//    public enemycontroller(float distance) {
-//        this.currentdistance = distance;
-//        this.createencounter();
-//        this.startencounter();
-//    }
+            //modify this to store how many enemies of each type to properly handle attacks
 
-//    //give certain score amounts for enemy types
+            for (int i = 0; i < 3; i++)
+            {
+                if (typesOfEnemiesInSlots[i] > 0)
+                {
+                    
+                }
+            }
 
-//    //begins encounter
-//    void startencounter() {
+            //random chance that each enemy hits, assume it is all simple narwhal for now
+            for (int i = 0; i < totalEnemies; i++)
+            {
+                //update called ~60 times per second, im thinking a hit about once per every 3-6 seconds?
+                int hitChance = Random.Range(1, 180);
 
-//    }
+                if (hitChance < 30)
+                {
 
-//    //called at end of encounter to clean up class
-//    void endattack() {
+                }
 
-//    }
+                if (hitChance < 30)
+                    numberOfHolesCreated++;
+            }
+        }
+        
+    }
 
-//    // update is called once per frame
-//    void updateenemies(float distance) {
-//        currentdistance = distance;
-//        if (encounteractive) //process attacks
-//        {
+    /// <summary>
+    /// Simple helper to successfully do a narwhal attack
+    /// </summary>
+    /// <returns></returns> The number of holes created (narwhal is always 1)
+    private int narwhalAttack()
+    {
+        return 1;
+    }
 
-//        }
-//    }
+    /// <summary>
+    /// Simple helper to successfully do a hammerhead attack
+    /// </summary>
+    /// <returns></returns> The number of holes created
+    private int hammerheadAttack()
+    {
+        return 3;
+    }
 
-//    //need to create encounter based off score/distance travelled for difficulty.
-//    //for now, always spawn 3 narwhals in slot 0
-//    public void createencounter() {
-//        encounteractive = true;
-//        typesofenemies[narwhal] = 1;
-//        numberofenemiesbytype[narwhal] = 3;
-//    }
+    /// <summary>
+    /// Simple helper to successfully do a whale attack
+    /// </summary>
+    /// <returns></returns> The number of holes created (whale is special, assume 1 hit for now)
+    private int whaleAttack()
+    {
+        return 1;
+    }
 
-//    public void updateattack() { }
+}
 
-//    public void processdamagereceived() {
-
-//    }
-//}
