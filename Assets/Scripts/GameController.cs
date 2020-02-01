@@ -4,6 +4,30 @@ using UnityEngine;
 
 public class GameController : MonoBehaviour {
 
+    public GameObject slow_obj_1;
+    public GameObject slow_obj_2;
+    public GameObject slow_obj_3;
+
+    public GameObject med_obj_1;
+    public GameObject med_obj_2;
+    public GameObject med_obj_3;
+
+    public GameObject fast_obj_1;
+    public GameObject fast_obj_2;
+    public GameObject fast_obj_3;
+
+    private Animator slow_anim_1;
+    private Animator slow_anim_2;
+    private Animator slow_anim_3;
+
+    private Animator med_anim_1;
+    private Animator med_anim_2;
+    private Animator med_anim_3;
+
+    private Animator fast_anim_1;
+    private Animator fast_anim_2;
+    private Animator fast_anim_3;
+
     // Speed Will be Represented From 10 to 20 to 30;
     public float shipSpeed;
 
@@ -17,9 +41,11 @@ public class GameController : MonoBehaviour {
 
     // Controlled in PlayerController Class
     // Turned on in PlayerController Class
-    // Turned 
-    public bool GoWasPressed;
+    // Turned off in GameContoller
+    public bool goWasPressed;
     public bool blastWasPressed;
+    public int fillHole;
+
 
     public float distanceTravelled;
     public int playerScore;
@@ -44,8 +70,8 @@ public class GameController : MonoBehaviour {
     //  - 1 = Basic Hole
     //  - 2 = Gummy Hole
     //  - 3 = Plugged with Gum
-    // 14 is also hard coded in hole sprite function
-    int[] holes = new int[14];
+    int[] holes;
+    int numPossibleHoles = 14;
 
     public int currentGunCharge;
     public bool gunReady;
@@ -54,48 +80,60 @@ public class GameController : MonoBehaviour {
 
     // Enemy Triggers
     // Can be set to:
-    //      - ATTACK
-    //      - IDLE
-    //      - DYING
-    //      - OFF
-    public string slow1 = "OFF";
-    public string slow2 = "OFF";
-    public string slow3 = "OFF";
+    //      - ATTACK = 1
+    //      - IDLE   = 2
+    //      - DYING  = 3
+    //      - OFF    = -1
+    private int slow1 = -1;
+    private int slow2 = -1;
+    private int slow3 = -1;
 
-    public string med1 = "OFF";
-    public string med2 = "OFF";
-    public string med3 = "OFF";
+    private int med1 = -1;
+    private int med2 = -1;
+    private int med3 = -1;
 
-    public string fast1 = "OFF";
-    public string fast2 = "OFF";
-    public string fast3 = "OFF";
+    private int fast1 = -1;
+    private int fast2 = -1;
+    private int fast3 = -1;
 
     //private EnemyController enemyEncounter;
 
     // Start is called before the first frame update
     void Start() {
-        GoWasPressed = false;
+        slow_anim_1 = slow_obj_1.GetComponent<Animator>();
+        slow_anim_2 = slow_obj_2.GetComponent<Animator>();
+        slow_anim_3 = slow_obj_3.GetComponent<Animator>();
+
+        med_anim_1 = med_obj_1.GetComponent<Animator>();
+        med_anim_2 = med_obj_2.GetComponent<Animator>();
+        med_anim_3 = med_obj_3.GetComponent<Animator>();
+
+        fast_anim_1 = fast_obj_1.GetComponent<Animator>();
+        fast_anim_2 = fast_obj_2.GetComponent<Animator>();
+        fast_anim_3 = fast_obj_3.GetComponent<Animator>();
+
+        goWasPressed = false;
         playerScore = 0;
         shipSpeed = 0;
         numHoles = 0;
         currentGunCharge = 0;
         oxygenLevel = 100;
+        holes = new int[14];
+        fillHole = -1;
 
         updateSpawnDistance();
-        /*
-        animator = GetComponent<Animator>();
 
-        animator.SetString("slow1", slow1);
-        animator.SetString("slow2", slow2);
-        animator.SetString("slow3", slow3);
+        slow_anim_1.SetInteger("slow1", slow1);
+        slow_anim_2.SetInteger("slow2", slow2);
+        slow_anim_3.SetInteger("slow3", slow3);
 
-        animator.SetString("med1", med1);
-        animator.SetString("med2", med2);
-        animator.SetString("med3", med3);
+        med_anim_1.SetInteger("med1", med1);
+        med_anim_2.SetInteger("med2", med2);
+        med_anim_3.SetInteger("med3", med3);
 
-        animator.SetString("fast1", fast1);
-        animator.SetString("fast2", fast2);
-        animator.SetString("fast3", fast3);*/
+        fast_anim_1.SetInteger("fast1", fast1);
+        fast_anim_2.SetInteger("fast2", fast2);
+        fast_anim_3.SetInteger("fast3", fast3);
     }
 
     // Update is called once per frame
@@ -113,6 +151,14 @@ public class GameController : MonoBehaviour {
         {
             enemyEncounter.updateAttack();
             setEnemySprites(enemyEncounter.attacking, enemyEncounter.typesOfEnemiesInSlots);
+            if (enemyEncounter.numberOfHolesCreated > 0)
+            {
+                for (int i = 0; i < enemyEncounter.numberOfHolesCreated; i++)
+                {
+                    addNewHole();
+                }
+                enemyEncounter.numberOfHolesCreated = 0;
+            }
         }
 
         if ((distanceTravelled < spawnDistance) && (enemyEncounter == null))
@@ -155,7 +201,7 @@ public class GameController : MonoBehaviour {
 
     // Ship accelerates 5x faster then it decelerates
     void updateShipSpeed() {
-        if (GoWasPressed) {
+        if (goWasPressed) {
             shipSpeed += 5;
         }
         else {
@@ -186,36 +232,42 @@ public class GameController : MonoBehaviour {
         {
             if (attacking[0])
             {
-                slow1 = "ATTACK";
+                // ATTACK
+                slow1 = 1;
                 attacking[0] = false;
             }
             else
             {
-                slow1 = "IDLE";
+                // IDLE
+                slow1 = 2;
             }
         }
         else if (activeEnemies[0] == 2)
         {
             if (attacking[0])
             {
-                med1 = "ATTACK";
+                // ATTACK
+                med1 = 1;
                 attacking[0] = false;
             }
             else
             {
-                med1 = "IDLE";
+                // IDLE
+                med1 = 2;
             }
         }
         else if (activeEnemies[0] == 3)
         {
             if (attacking[0])
             {
-                fast1 = "ATTACK";
+                // ATTACK
+                fast1 = 1;
                 attacking[0] = false;
             }
             else
             {
-                fast1 = "IDLE";
+                // IDLE
+                fast1 = 2;
             }
         }
 
@@ -224,36 +276,42 @@ public class GameController : MonoBehaviour {
         {
             if (attacking[1])
             {
-                slow2 = "ATTACK";
+                // ATTACK
+                slow2 = 1;
                 attacking[1] = false;
             }
             else
             {
-                slow2 = "IDLE";
+                // IDLE
+                slow2 = 2;
             }
         }
         else if (activeEnemies[1] == 2)
         {
             if (attacking[1])
             {
-                med2 = "ATTACK";
+                // ATTACK
+                med2 = 1;
                 attacking[1] = false;
             }
             else
             {
-                med2 = "IDLE";
+                // IDLE
+                med2 = 2;
             }
         }
         else if (activeEnemies[1] == 3)
         {
             if (attacking[1])
             {
-                fast2 = "ATTACK";
+                // ATTACK
+                fast2 = 1;
                 attacking[1] = false;
             }
             else
             {
-                fast2 = "IDLE";
+                // IDLE
+                fast2 = 2;
             }
         }
 
@@ -262,66 +320,72 @@ public class GameController : MonoBehaviour {
         {
             if (attacking[2])
             {
-                slow3 = "ATTACK";
+                // ATTACK
+                slow3 = 1;
                 attacking[2] = false;
             }
             else
             {
-                slow3 = "IDLE";
+                // IDLE
+                slow3 = 2;
             }
         }
         else if (activeEnemies[2] == 2)
         {
             if (attacking[2])
             {
-                med3 = "ATTACK";
+                // ATTACK
+                med3 = 1;
                 attacking[2] = false;
             }
             else
             {
-                med3 = "IDLE";
+                // IDLE
+                med3 = 2;
             }
         }
         else if (activeEnemies[2] == 3)
         {
             if (attacking[2])
             {
-                fast3 = "ATTACK";
+                // ATTACK
+                fast3 = 1;
                 attacking[2] = false;
             }
             else
             {
-                fast3 = "IDLE";
+                // IDLE
+                fast3 = 2;
             }
         }
     }
 
     private void clearEnemySprites()
     {
-        slow1 = "OFF";
-        slow2 = "OFF";
-        slow3 = "OFF";
-        med1 = "OFF";
-        med2 = "OFF";
-        med3 = "OFF";
-        fast1 = "OFF";
-        fast2 = "OFF";
-        fast3 = "OFF";
+        slow1 = -1;
+        slow2 = -1;
+        slow3 = -1;
+        med1 =  -1;
+        med2 =  -1;
+        med3 =  -1;
+        fast1 = -1;
+        fast2 = -1;
+        fast3 = -1;
     }
 
     private void updateEnemySprites()
-    {/*
-        animator.SetString("slow1", slow1);
-        animator.SetString("slow2", slow2);
-        animator.SetString("slow3", slow3);
+    {
+        slow_anim_1.SetInteger("slow1", slow1);
+        slow_anim_2.SetInteger("slow2", slow2);
+        slow_anim_3.SetInteger("slow3", slow3);
 
-        animator.SetString("med1", med1);
-        animator.SetString("med2", med2);
-        animator.SetString("med3", med3);
+        med_anim_1.SetInteger("med1", med1);
+        med_anim_2.SetInteger("med2", med2);
+        med_anim_3.SetInteger("med3", med3);
 
-        animator.SetString("fast1", fast1);
-        animator.SetString("fast2", fast2);
-        animator.SetString("fast3", fast3);*/
+        fast_anim_1.SetInteger("fast1", fast1);
+        fast_anim_2.SetInteger("fast2", fast2);
+        fast_anim_3.SetInteger("fast3", fast3);
     }
 
 //**********************************************************************************************************************
@@ -330,9 +394,34 @@ public class GameController : MonoBehaviour {
 
     void updateHoleSprites()
     {
-        for (int i = 0; i < 14; i++)
+        for (int i = 0; i < numPossibleHoles; i++)
         {
             // TO-DO PLAY CORRECT SPRITE BASED ON HOLE STATUSES
+        }
+    }
+
+    void addNewHole()
+    {
+        int startIndice = Random.Range(0, (numPossibleHoles - 1));
+        
+        for (int i = 0; i < numPossibleHoles; i++)
+        {
+            if (startIndice + i >= numPossibleHoles)
+            {
+                startIndice = -i;
+            }
+            if (holes[startIndice + i] == 0)
+            {
+                holes[startIndice + i] = 1;
+                numHoles++;
+                return;
+            }
+            if (holes[startIndice + i] == 3)
+            {
+                holes[startIndice + i] = 2;
+                numHoles++;
+                return;
+            }
         }
     }
 
@@ -354,6 +443,22 @@ public class GameController : MonoBehaviour {
         if (currentGunCharge == 5)
         {
             gunReady = true;
+        }
+    }
+
+    public bool canBeFilled(int numHole)
+    {
+        // If there is a hole
+        if ((holes[numHole] == 1) || (holes[numHole] == 2))
+        {
+            // Plug hole with gum
+            holes[numHole] = 3;
+            numHoles--;
+            return true;
+        }
+        else
+        {
+            return false;
         }
     }
 
