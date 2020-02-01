@@ -1,8 +1,8 @@
-﻿using system.collections;
-using system.collections.generic;
-using unityengine;
+﻿using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
 
-public class enemycontroller : monobehaviour {
+public class enemycontroller : Monobehaviour {
     //to do
     /*
      * clear up methods needed by roxannes class for this class to be useful, right now its a little ad hoc
