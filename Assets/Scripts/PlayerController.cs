@@ -9,8 +9,6 @@ public class PlayerController : MonoBehaviour
     private Animator animPlayer;
     public GameObject gumOverlay;
     private Animator animGum;
-    public GameObject gameControllerObject;
-    private GameController gameController;
 
     //movement variables
     public float thrust;
@@ -38,8 +36,6 @@ public class PlayerController : MonoBehaviour
 
     // Start is called before the first frame update
     void Start(){
-        gameController = gameControllerObject.GetComponent<GameController>();
-
         rb = GetComponent<Rigidbody2D>();
         col = GetComponent<Collider2D>();
         animPlayer = GetComponent<Animator>();
@@ -131,7 +127,7 @@ public class PlayerController : MonoBehaviour
             //4. Speed up the ship
             else if (col.IsTouching(steeringCol)) {
                 Debug.Log("SpaceBar hit -> Player is piloting ship.");
-                //TODO gameController.goWasPressed = true;
+                //TODO what do do when interacting with steering/speedup
             }
 
             //5. Collect more gumballs
