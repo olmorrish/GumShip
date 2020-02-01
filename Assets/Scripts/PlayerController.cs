@@ -119,11 +119,10 @@ public class PlayerController : MonoBehaviour
             }
 
             //5. Collect more gumballs
-            else if (col.IsTouching(gumDispenserCol)) { //just increment number of gumballs in inventory if allowed
-                Debug.Log("SpaceBar hit -> Player is getting new gumballs from the dispenser.");
-                if (numberGumballs+1 < maxGumballs) {
-                    numberGumballs++;
-                }
+            else if (col.IsTouching(gumDispenserCol) && (numberGumballs < maxGumballs)) { 
+                Debug.Log("SpaceBar hit -> Player is getting a new gumball from the dispenser.");
+                numberGumballs++;
+
             }
 
             //6. No other options; player must be trying to chew the gum
