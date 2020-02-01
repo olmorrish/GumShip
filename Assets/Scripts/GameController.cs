@@ -44,8 +44,7 @@ public class GameController : MonoBehaviour {
     //  - 1 = Basic Hole
     //  - 2 = Gummy Hole
     //  - 3 = Plugged with Gum
-    int numPossibleHoles = 14;
-    int[] holes = new int[numPossibleHoles];
+    int[] holes = new int[14];
 
     public int currentGunCharge;
     public bool gunReady;
@@ -54,6 +53,8 @@ public class GameController : MonoBehaviour {
     public bool gumReady;
 
     private bool beingAttacked;
+
+    public EnemyController enemyEncounter;
 
     //private EnemyController enemyEncounter;
 
@@ -167,18 +168,18 @@ public class GameController : MonoBehaviour {
     //**********************************************************************************************************************
 
     // After an attack updateSpawnDistance determines at what distance the next attack should be triggered
-    private void updateSpawnDistance() {
+    void updateSpawnDistance() {
         float nextInterval = Random.Range(lowerSpawnBound, upperSpawnBound);
         spawnDistance = distanceTravelled + nextInterval;
     }
 
     // How fast enemies spawn should ne a function of the player score
-    private void updateEnemySpawnRates() {
+    void updateEnemySpawnRates() {
         lowerSpawnBound = 80 / playerScore;
         upperSpawnBound = 100 / playerScore;
     }
 
-    private void setEnemySprites(bool[] attacking, int[] activeEnemies)
+    void setEnemySprites(bool[] attacking, int[] activeEnemies)
     {
         // First Enemy
         if (activeEnemies[0] == 1)
