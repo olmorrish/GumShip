@@ -49,12 +49,25 @@ public class GameController : MonoBehaviour {
     public int currentGunCharge;
     public bool gunReady;
 
-    public int unchewedGum;
-    public bool gumReady;
-
-    private bool beingAttacked;
-
     public EnemyController enemyEncounter;
+
+    // Enemy Triggers
+    // Can be set to:
+    //      - ATTACK
+    //      - IDLE
+    //      - DYING
+    //      - OFF
+    public string slow1 = "OFF";
+    public string slow2 = "OFF";
+    public string slow3 = "OFF";
+
+    public string med1 = "OFF";
+    public string med2 = "OFF";
+    public string med3 = "OFF";
+
+    public string fast1 = "OFF";
+    public string fast2 = "OFF";
+    public string fast3 = "OFF";
 
     //private EnemyController enemyEncounter;
 
