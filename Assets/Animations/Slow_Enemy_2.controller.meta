@@ -1,6 +1,12 @@
 fileFormatVersion: 2
+<<<<<<< HEAD:Assets/Animations/Slow_Enemy_2.controller.meta
 guid: 78cb4736dccfc9448894b4c1d6977a7c
 NativeFormatImporter:
+=======
+guid: ae2d793b54754234296c096ab2ac8e9c
+folderAsset: yes
+DefaultImporter:
+>>>>>>> 24ef4340b3bec5b1036915bcf6ea691a606375f4:Assets/Prefabs.meta
   externalObjects: {}
   mainObjectFileID: 0
   userData: 

@@ -18,9 +18,6 @@ public class EnemyController : MonoBehaviour
     //1 = narwhal
     //2 = hammerheads
     //3 = whale
-    /// <summary>
-    /// This is the types of enemies present in each enemy "slot"
-    /// </summary>
     public int[] typesOfEnemiesInSlots = { 0, 0, 0 };
 
 
@@ -54,22 +51,152 @@ public class EnemyController : MonoBehaviour
     /// </summary>
     void createEncounter()
     {
-        //make fancy calculations to do a semi random encounter generator based off distance and random chance
-        /* Early on should have overall just narwhals and simple fights
-         * 
-         * Im thinking distance thresholds for when to introduce new enemy types and
-         * possibly another threshold
-         * 
-         */
+        int numOfNarwhals;
+        int numOfHammerheads;
+        int totalNumOfEnemies;
+        int bias;
+
+        if (currentDistance < 500) //easy, only narwhals 1-3 with a bias to 1
+        {
+            numOfNarwhals = Random.Range(1, 3);
+            bias = Random.Range(1, 2);
+
+            numOfNarwhals -= bias;
+
+            totalNumOfEnemies = numOfNarwhals;
+
+            //check to make sure we still have at least 1 enemy
+            if(totalNumOfEnemies < 1)
+            {
+                totalNumOfEnemies = 1;
+            }
+
+            //assign attacking enemy to vars
+            for(int i = 0; i < totalNumOfEnemies; i++)
+            {
+                typesOfEnemiesInSlots[i] = 1;   //just narwhals
+            }
+
+        }
+        else if(currentDistance < 1000) //medium mix of narwhals and hammerheads with a bias towards narwhals
+        {
+            numOfNarwhals = Random.Range(2, 3);
+            numOfHammerheads = 0;
+
+            if(numOfNarwhals < 3)   //room for hammerhead
+            {
+                if(Random.Range(1, 2) == 1) //50% chance hammerhead spawns
+                {
+                    numOfHammerheads = 3 - numOfNarwhals;
+                }
+                
+            }
+
+            totalNumOfEnemies = numOfHammerheads + numOfNarwhals;
+
+            //place into vars
+            for(int i = 0; i < totalNumOfEnemies; i++)
+            {
+                //distribute narwhals and hammerheads across the slots
+                if(numOfNarwhals > 0)
+                {
+                    typesOfEnemiesInSlots[i] = 1;
+                    numOfNarwhals--;
+                }
+                else if(numOfHammerheads > 0)
+                {
+                    typesOfEnemiesInSlots[i] = 2;
+                    numOfHammerheads--;
+                }
+            }
+
+            
+
+        }
+        else if(currentDistance < 1500) //hard mix of narwhals and hammerheads, bias towards hammerheads
+        {
+            numOfNarwhals = Random.Range(1, 3);
+            bias = Random.Range(1, 3);
+
+            numOfNarwhals -= bias;
+
+            if(numOfNarwhals < 0)
+            {
+                numOfNarwhals = 0;
+            }
+
+            //guarenteed to be no greater than 2 narwhals
+            numOfHammerheads = 3 - numOfNarwhals;
+
+            totalNumOfEnemies = numOfNarwhals + numOfHammerheads;
+
+            for(int i = 0; i < totalNumOfEnemies; i++)
+            {
+                if(numOfNarwhals > 0)
+                {
+                    typesOfEnemiesInSlots[i] = 1;
+                    numOfNarwhals--;
+                }
+                else if(numOfHammerheads > 0)
+                {
+                    typesOfEnemiesInSlots[i] = 2;
+                    numOfHammerheads--;
+                }
+            }
+
+        }
+        else    //expert similar to hard but with a chance to spawn 1 whale
+        {
+            int numOfWhale = 0;
+
+            numOfNarwhals = Random.Range(1, 2);
+            bias = Random.Range(1, 2);
+
+            numOfNarwhals -= bias;
+
+            if (numOfNarwhals < 0)
+            {
+                numOfNarwhals = 0;
+            }
 
 
+            //guarenteed to be no greater than 2 narwhals
+            numOfHammerheads = Random.Range(1, 3);
+
+            totalNumOfEnemies = numOfNarwhals + numOfHammerheads;
+            if(totalNumOfEnemies > 3)
+            {
+                numOfNarwhals = 0;
+                totalNumOfEnemies = numOfNarwhals + numOfHammerheads;
+            }
+
+            if(totalNumOfEnemies < 3)   //DEPLOY W H A L E
+            {
+                numOfWhale = 1;
+                totalNumOfEnemies += numOfWhale;
+            }
 
 
+            for (int i = 0; i < totalNumOfEnemies; i++)
+            {
+                if (numOfNarwhals > 0)
+                {
+                    typesOfEnemiesInSlots[i] = 1;
+                    numOfNarwhals--;
+                }
+                else if (numOfHammerheads > 0)
+                {
+                    typesOfEnemiesInSlots[i] = 2;
+                    numOfHammerheads--;
+                }
+                else if(numOfWhale > 0)
+                {
+                    typesOfEnemiesInSlots[i] = 3;
+                    numOfWhale--;
+                }
+            }
+        }
 
-
-        typesOfEnemiesInSlots[0] = 1;
-        typesOfEnemiesInSlots[1] = 1;
-        typesOfEnemiesInSlots[2] = 1;
     }
 
     /// <summary>
