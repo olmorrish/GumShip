@@ -5,11 +5,11 @@ using UnityEngine;
 public class EnemyController : MonoBehaviour
 {
 
-    float numberOfHolesCreated = 0;
+    public float numberOfHolesCreated = 0;
 
     int nextHit = 0;
 
-    bool[] attacking = { false, false, false };
+    public bool[] attacking = { false, false, false };
 
 
     float currentDistance = 0;
