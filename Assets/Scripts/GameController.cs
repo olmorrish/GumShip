@@ -32,16 +32,42 @@ public class GameController : MonoBehaviour
 
     public float oxygenLevel;
 
-    public int unchewedGum;
-    public bool gumReady;
+    // Hole Management
+    // Hole States 
+    // C# Arrays Default to 0 for int
+    //  - 0 = OFF
+    //  - 1 = Basic Hole
+    //  - 2 = Gummy Hole
+    //  - 3 = Plugged with Gum
+    int numberOfHoles = 14;
+    int[] holes = new int[numberOfHoles];
+
+    public bool gunReady;
 
     private bool beingAttacked;
 
-    //private EnemyController enemyEncounter;
+    private EnemyController enemyEncounter;
 
+    // Enemy Triggers
+    // Can be set to:
+    //      - ATTACK
+    //      - IDLE
+    //      - DYING
+    //      - OFF
+    public string slow1 = "OFF";
+    public string slow2 = "OFF";
+    public string slow3 = "OFF";
 
+    public string med1 = "OFF";
+    public string med2 = "OFF";
+    public string med3 = "OFF";
 
-    //
+    public string fast1 = "OFF";
+    public string fast2 = "OFF";
+    public string fast3 = "OFF";
+
+    //public int unchewedGum;
+    //public bool gumReady;
 
     // Start is called before the first frame update
     void Start() {
@@ -62,16 +88,32 @@ public class GameController : MonoBehaviour
         updateShipSpeed();
 
         updateEnemySpawnRates();
-
-        if (beingAttacked)
+        
+        // This updates the enemy encounter
+        // Should set correct enemy sprites to active
+        // 
+        if (enemyEncounter != null)
         {
-            //enemyEncounter.updateEnemies();
+            enemyEncounter.updateEnemies();
         }
 
-        if (distanceTravelled < spawnDistance)
+        if ((distanceTravelled < spawnDistance) && (enemyEncounter == null))
         {
-            //enemyEncounter = new EnemyController;
+            enemyEncounter = new EnemyController(playerScore);
+            // TO-DO 
         }
+
+        // If gun is ready it fires and enemy encounter ends
+        // A sprite will need to be played
+        // All enemy sprites should be turned off
+        if (gunReady)
+        {
+            enemyEncounter = null;
+            // TO-DO PLAY BLAST ANIMATION
+            // TO-DO TURN ENEMY SPRITES OFF
+        }
+
+        generateHoleSprites();
         
     }
 
@@ -119,5 +161,13 @@ public class GameController : MonoBehaviour
 //**********************************************************************************************************************
 // Ship Status
 //**********************************************************************************************************************
+
+    void generateHoleSprites()
+    {
+        for (int i = 0; i < numOfHoles; i++)
+        {
+            // TO-DO PLAY CORRECT SPRITE BASED ON HOLE STATUSES
+        }
+    }
 
 }
