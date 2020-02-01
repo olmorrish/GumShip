@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class enemycontroller : MonoBehaviour {
+public class EnemyController : MonoBehaviour {
     //to do
     /*
      * clear up methods needed by roxannes class for this class to be useful, right now its a little ad hoc
@@ -19,12 +19,14 @@ public class enemycontroller : MonoBehaviour {
 
 
     //used to access the associated arrays
-    static const int narwhal = 0, hammerhead = 1, whale = 2;
+    const int narwhal = 0, hammerhead = 1, whale = 2;
 
     //number of holes created by enemy attacks, should get passed to gamecontroller
     int numofcreatedholes;
 
     float currentdistance;
+
+    bool encounteractive;
 
     //0 = no enemies
     //1 = narwhal
@@ -38,7 +40,7 @@ public class enemycontroller : MonoBehaviour {
     public int[] numberofenemiesbytype = { 0, 0, 0 };
 
     //creates the class, this will start the encounter as soon as its constructed
-    public enemycontroller(float distance) {
+    public EnemyController(float distance) {
         this.currentdistance = distance;
         this.createencounter();
         this.startencounter();
