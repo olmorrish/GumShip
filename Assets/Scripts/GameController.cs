@@ -2,9 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GameController : MonoBehaviour
-{
-    private Animator animator;
+public class GameController : MonoBehaviour {
 
     // Speed Will be Represented From 10 to 20 to 30;
     public float shipSpeed;
@@ -52,30 +50,12 @@ public class GameController : MonoBehaviour
     public int currentGunCharge;
     public bool gunReady;
 
+    public int unchewedGum;
+    public bool gumReady;
+
     private bool beingAttacked;
 
-    private EnemyController enemyEncounter;
-
-    // Enemy Triggers
-    // Can be set to:
-    //      - ATTACK
-    //      - IDLE
-    //      - DYING
-    //      - OFF
-    public string slow1 = "OFF";
-    public string slow2 = "OFF";
-    public string slow3 = "OFF";
-
-    public string med1 = "OFF";
-    public string med2 = "OFF";
-    public string med3 = "OFF";
-
-    public string fast1 = "OFF";
-    public string fast2 = "OFF";
-    public string fast3 = "OFF";
-
-    //public int unchewedGum;
-    //public bool gumReady;
+    //private EnemyController enemyEncounter;
 
     // Start is called before the first frame update
     void Start() {
@@ -105,7 +85,10 @@ public class GameController : MonoBehaviour
     }
 
     // Update is called once per frame
+
     void FixedUpdate(){
+
+    void Update() {
 
         updateDistance();
 
@@ -147,47 +130,52 @@ public class GameController : MonoBehaviour
 
 
 
+
+        updateEnemySpawnRates();
+
+        if (beingAttacked) {
+            //enemyEncounter.updateEnemies();
+        }
+
+        if (distanceTravelled < spawnDistance) {
+            //enemyEncounter = new EnemyController;
+        }
+
     }
 
-//**********************************************************************************************************************
-// Ship Movement
-//**********************************************************************************************************************
+    //**********************************************************************************************************************
+    // Ship Movement
+    //**********************************************************************************************************************
 
-    void updateDistance()
-    {
+    void updateDistance() {
         distanceTravelled += shipSpeed;
         playerScore += (int)shipSpeed;
     }
 
     // Ship accelerates 5x faster then it decelerates
-    void updateShipSpeed()
-    {
-        if (GoWasPressed)
-        {
+    void updateShipSpeed() {
+        if (GoWasPressed) {
             shipSpeed += 5;
         }
-        else
-        {
+        else {
             shipSpeed -= 1;
         }
     }
 
-//**********************************************************************************************************************
-// Enemy Attacks
-//**********************************************************************************************************************
+    //**********************************************************************************************************************
+    // Enemy Attacks
+    //**********************************************************************************************************************
 
     // After an attack updateSpawnDistance determines at what distance the next attack should be triggered
-    private void updateSpawnDistance()
-    {
+    private void updateSpawnDistance() {
         float nextInterval = Random.Range(lowerSpawnBound, upperSpawnBound);
         spawnDistance = distanceTravelled + nextInterval;
     }
 
     // How fast enemies spawn should ne a function of the player score
-    private void updateEnemySpawnRates()
-    {
-        lowerSpawnBound = 80/playerScore;
-        upperSpawnBound = 100/playerScore;
+    private void updateEnemySpawnRates() {
+        lowerSpawnBound = 80 / playerScore;
+        upperSpawnBound = 100 / playerScore;
     }
 
     private void setEnemySprites(bool[] attacking, int[] activeEnemies)

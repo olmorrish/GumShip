@@ -6,7 +6,9 @@ public class PlayerController : MonoBehaviour
 {
     private Rigidbody2D rb;
     private Collider2D col;
-    private Animator anim;
+    private Animator animPlayer;
+    public GameObject gumOverlay;
+    private Animator animGum;
 
     //movement variables
     public float thrust;
@@ -36,7 +38,8 @@ public class PlayerController : MonoBehaviour
     void Start(){
         rb = GetComponent<Rigidbody2D>();
         col = GetComponent<Collider2D>();
-        anim = GetComponent<Animator>();
+        animPlayer = GetComponent<Animator>();
+        animGum = gumOverlay.GetComponent<Animator>();
 
         steeringCol = steering.GetComponent<Collider2D>();
         defensesCol = defenses.GetComponent<Collider2D>();
@@ -47,7 +50,8 @@ public class PlayerController : MonoBehaviour
     void FixedUpdate(){
 
         //default animator resets
-        anim.SetBool("isGettingGum", false);
+        animPlayer.SetBool("isGettingGum", false);
+        animGum.SetBool("isGettingGum", false);
 
         //check if there is a hole below the player where they can plug it
         Collider2D[] belowPlayerCollisions = Physics2D.OverlapCircleAll
@@ -65,35 +69,42 @@ public class PlayerController : MonoBehaviour
         //Thrust movement
         if (Input.GetKey(KeyCode.W)) {
             rb.AddRelativeForce(Vector2.up * thrust);
-            anim.SetBool("isMoving", true);
+            animPlayer.SetBool("isMoving", true);
+            animGum.SetBool("isMoving", true);
+
         }
         else if (Input.GetKey(KeyCode.S)) {
             rb.AddRelativeForce(Vector2.down * thrust);
-            anim.SetBool("isMoving", true);
+            animPlayer.SetBool("isMoving", true);
+            animGum.SetBool("isMoving", true);
         }
 
         //Rotation movement
         if (Input.GetKey(KeyCode.A)) {
             rb.AddTorque(rotationalTorque * 1, ForceMode2D.Force);
-            anim.SetBool("isMoving", true);
+            animPlayer.SetBool("isMoving", true);
+            animGum.SetBool("isMoving", true);
         }
         else if (Input.GetKey(KeyCode.D)) {
             rb.AddTorque(rotationalTorque * -1, ForceMode2D.Force);
-            anim.SetBool("isMoving", true);
+            animPlayer.SetBool("isMoving", true);
+            animGum.SetBool("isMoving", true);
         }
 
         //special case for idle animation update; have to check for absense of primary inputs due to my dumb code structure
         if(!(Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.D))) {
-            anim.SetBool("isMoving", false);
+            animPlayer.SetBool("isMoving", false);
+            animGum.SetBool("isMoving", false);
         }
 
         //All interactions via SpaceBar
-        if (Input.GetKeyDown(KeyCode.Space)) {  //using keyDOWN since we want a trigger on each hit of the key
+        if (Input.GetKeyDown(KeyCode.Space) || Input.GetKeyUp(KeyCode.Space)) {  //using keyDOWN since we want a trigger on each hit of the key
 
             //1. Get gum into mouth before trying anything else
             if (!hasGumInMouth && numberGumballs > 0) {
                 Debug.Log("SpaceBar hit -> Player is putting gum in mouth.");
-                anim.SetBool("isGettingGum", true);
+                animPlayer.SetBool("isGettingGum", true);
+                animGum.SetBool("isGettingGum", true);
                 hasGumInMouth = true;
                 numberGumballs--;
             }
@@ -101,7 +112,8 @@ public class PlayerController : MonoBehaviour
             //2. Dunk gum if you can
             else if (hasGumInMouth && (chewsUntilSticky <= 0) && holeToPlug) {
                 Debug.Log("SpaceBar hit -> Player is plugging a hole.");
-                anim.SetBool("isDunking", true);
+                animPlayer.SetBool("isDunking", true);
+                animGum.SetBool("isDunking", true);
                 hasGumInMouth = false;
                 //TODO interaction with the hole object
             }
@@ -128,16 +140,21 @@ public class PlayerController : MonoBehaviour
             //6. No other options; player must be trying to chew the gum
             else {
                 Debug.Log("SpaceBar hit -> Player is chewing gum.");
-                anim.SetBool("isChewing", true);
-                if(chewsUntilSticky > 0) {
+                animPlayer.SetBool("isChewing", true);
+                animGum.SetBool("isChewing", true);
+                if (chewsUntilSticky > 0) {
                     chewsUntilSticky--;
                 }
             }
         }
         else {  //Space is not hit, so the player cannot be chewing or interacting with anything
-            anim.SetBool("isChewing", false);
-            anim.SetBool("isInteracting", false);   //TODO ensure this doesn't break shit
-            anim.SetBool("isDunking", false);       //TODO ensure this doesn't break shit
+            animPlayer.SetBool("isChewing", false);
+            animPlayer.SetBool("isInteracting", false);   //TODO ensure this doesn't break shit
+            animPlayer.SetBool("isDunking", false);       //TODO ensure this doesn't break shit
+
+            animGum.SetBool("isChewing", false);
+            animGum.SetBool("isInteracting", false);   //TODO ensure this doesn't break shit
+            animGum.SetBool("isDunking", false);       //TODO ensure this doesn't break shit
         }
     }
 }

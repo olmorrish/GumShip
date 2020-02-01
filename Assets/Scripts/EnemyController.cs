@@ -2,77 +2,82 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemyController : MonoBehaviour
-{
+public class EnemyController : MonoBehaviour {
+    //to do
+    /*
+     * clear up methods needed by roxannes class for this class to be useful, right now its a little ad hoc
+     * (attack, endattack, updateenemies, createencounter, updateattack, processdamagereceived)
+     * 
+     * implement enemy generation
+     * 
+     * also use notes and music to clear your head
+     * 
+     * switch this to object type, so it has a start function
+     * this class gets created when the encounter starts and deleted when the encounter ends
+     */
 
-    float numberOfHolesCreated;
- 
 
-    float currentDistance;
+
+    //used to access the associated arrays
+    const int narwhal = 0, hammerhead = 1, whale = 2;
+
+    //number of holes created by enemy attacks, should get passed to gamecontroller
+    int numofcreatedholes;
+
+    float currentdistance;
+
+    bool encounteractive;
 
     //0 = no enemies
     //1 = narwhal
     //2 = hammerheads
     //3 = whale
-    /// <summary>
-    /// This is the types of enemies present in each enemy "slot"
-    /// </summary>
-    public int[] typesOfEnemiesInSlots = { 0, 0, 0 };
+    public int[] typesofenemies = { 0, 0, 0 };
 
+    //index 0 = narwhals
+    //index 1 = hammerheads
+    //index 2 = whales
+    public int[] numberofenemiesbytype = { 0, 0, 0 };
 
     //creates the class, this will start the encounter as soon as its constructed
-    public EnemyController(float distance)
-    {
-        this.setup(distance);
-        this.createEncounter();
-    }  
+    public EnemyController(float distance) {
+        this.currentdistance = distance;
+        this.createencounter();
+        this.startencounter();
+    }
 
-    /// <summary>
-    /// Called in constructor, sets up the various variables for tracking
-    /// </summary>
-    void setup(float distance)
-    {
-        this.currentDistance = distance;
-        typesOfEnemiesInSlots[0] = 0;
-        typesOfEnemiesInSlots[1] = 0;
-        typesOfEnemiesInSlots[2] = 0;
-        numberOfHolesCreated = 0;
+    //give certain score amounts for enemy types
+
+    //begins encounter
+    void startencounter() {
 
     }
 
+    //called at end of encounter to clean up class
+    void endattack() {
+
+    }
+
+    // update is called once per frame
+    void updateenemies(float distance) {
+        currentdistance = distance;
+        if (encounteractive) //process attacks
+        {
+
+        }
+    }
 
     //need to create encounter based off score/distance travelled for difficulty.
     //for now, always spawn 3 narwhals in slot 0
-    /// <summary>
-    /// Generates the enemies for the encounter, for now 1 narwhal in each slot
-    /// </summary>
-    void createEncounter() {
-        typesOfEnemiesInSlots[0] = 1;
-        typesOfEnemiesInSlots[1] = 1;
-        typesOfEnemiesInSlots[2] = 1;
+    public void createencounter() {
+        encounteractive = true;
+        typesofenemies[narwhal] = 1;
+        numberofenemiesbytype[narwhal] = 3;
     }
 
-    /// <summary>
-    /// Should be called by gameController once per update. This processes the enemy attacks
-    /// </summary>
-    public void updateAttack() {
-        //go through enemies in slots, get total enemy amt
-        int totalEnemies = 0;
+    public void updateattack() { }
 
-        for(int i = 0; i < 3; i++)
-        {
-            if (typesOfEnemiesInSlots[i] > 0)
-                totalEnemies++;
-        }
+    public void processdamagereceived() {
 
-        //random chance that each enemy hits, assume it is all simple narwhal for now
-        for(int i = 0; i < totalEnemies; i++)
-        {
-            int hitChance = Random.Range(1, 180);
-
-            if (hitChance < 30)
-                numberOfHolesCreated++;
-        }
     }
-
 }
