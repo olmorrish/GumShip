@@ -25,7 +25,6 @@ public class EnemyController : MonoBehaviour
     {
         this.setup(distance);
         this.createEncounter();
-        this.startEncounter();
     }  
 
     /// <summary>
@@ -35,7 +34,6 @@ public class EnemyController : MonoBehaviour
     {
         this.currentDistance = distance;
         typesOfEnemiesInSlots = (0, 0, 0);
-        numberOfEnemiesByType = (0, 0, 0);
         numberOfHolesCreated = 0;
 
     }
@@ -48,15 +46,12 @@ public class EnemyController : MonoBehaviour
     /// </summary>
     void createEncounter() {
         typesOfEnemiesInSlots = (1, 1, 1);
-        numberOfEnemiesByType = (1, 1, 1);
     }
 
     /// <summary>
     /// Should be called by gameController once per update. This processes the enemy attacks
     /// </summary>
     public void updateAttack() {
-        //for now we simply put 1 hole in slot 1
-        numOfCreatedHolesPerSlot = (1, 0, 0);
 
     }
 
