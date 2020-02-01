@@ -113,7 +113,7 @@ public class GameController : MonoBehaviour {
         fast_anim_3 = fast_obj_3.GetComponent<Animator>();
 
         goWasPressed = false;
-        playerScore = 0;
+        playerScore = 1;
         shipSpeed = 0;
         numHoles = 0;
         currentGunCharge = 0;
@@ -204,7 +204,7 @@ public class GameController : MonoBehaviour {
         if (goWasPressed) {
             shipSpeed += 5;
         }
-        else {
+        else if(shipSpeed > 0){
             shipSpeed -= 1;
         }
     }
