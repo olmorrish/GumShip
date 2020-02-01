@@ -4,21 +4,24 @@ using UnityEngine;
 
 public class GameController : MonoBehaviour
 {
+    private Animator animator;
+
     // Speed Will be Represented From 10 to 20 to 30;
     public float shipSpeed;
 
-    public float tierOne = 10;
-    public float tierTwo = 20;
-    public float tierThree = 30;
-    public float maxSpeed = 40;
-
-    public float speedDecayRate = 5;
+    public float tierOne = 25;
+    public float tierTwo = 50;
+    public float tierThree = 75;
+    public float maxSpeed = 100;
 
     // What tier we are currently in
     public int currentTier = 1;
 
     // Controlled in PlayerController Class
+    // Turned on in PlayerController Class
+    // Turned 
     public bool GoWasPressed;
+    public bool BlastWasPressed;
 
     public float distanceTravelled;
     public int playerScore;
@@ -30,7 +33,11 @@ public class GameController : MonoBehaviour
     private int lowerSpawnBound;
     private int upperSpawnBound;
 
+
+    // Goes from 100 to 0 
     public float oxygenLevel;
+
+    public int numHoles;
 
     // Hole Management
     // Hole States 
@@ -39,9 +46,10 @@ public class GameController : MonoBehaviour
     //  - 1 = Basic Hole
     //  - 2 = Gummy Hole
     //  - 3 = Plugged with Gum
-    int numberOfHoles = 14;
-    int[] holes = new int[numberOfHoles];
+    int numPossibleHoles = 14;
+    int[] holes = new int[numPossibleHoles];
 
+    public int currentGunCharge;
     public bool gunReady;
 
     private bool beingAttacked;
@@ -75,33 +83,50 @@ public class GameController : MonoBehaviour
         GoWasPressed = false;
         playerScore = 0;
         shipSpeed = 0;
+        numHoles = 0;
+        currentGunCharge = 0;
+        oxygenLevel = 100;
 
-        updateSpawnDistance(); 
+        updateSpawnDistance();
 
+        animator = GetComponent<Animator>();
+
+        animator.SetString("slow1", slow1);
+        animator.SetString("slow2", slow2);
+        animator.SetString("slow3", slow3);
+
+        animator.SetString("med1", med1);
+        animator.SetString("med2", med2);
+        animator.SetString("med3", med3);
+
+        animator.SetString("fast1", fast1);
+        animator.SetString("fast2", fast2);
+        animator.SetString("fast3", fast3);
     }
 
     // Update is called once per frame
-    void Update(){
+    void FixedUpdate(){
 
         updateDistance();
 
         updateShipSpeed();
-
-        updateEnemySpawnRates();
         
         // This updates the enemy encounter
         // Should set correct enemy sprites to active
         // 
         if (enemyEncounter != null)
         {
-            enemyEncounter.updateEnemies();
+            enemyEncounter.updateAttack();
+            setEnemySprites(enemyEncounter.attacking, enemyEncounter.typesOfEnemiesInSlots);
         }
 
         if ((distanceTravelled < spawnDistance) && (enemyEncounter == null))
         {
             enemyEncounter = new EnemyController(playerScore);
-            // TO-DO 
+            setEnemySprites(enemyEncounter.attacking, enemyEncounter.typesOfEnemiesInSlots);
         }
+
+        updateGunCharge();
 
         // If gun is ready it fires and enemy encounter ends
         // A sprite will need to be played
@@ -109,12 +134,19 @@ public class GameController : MonoBehaviour
         if (gunReady)
         {
             enemyEncounter = null;
-            // TO-DO PLAY BLAST ANIMATION
-            // TO-DO TURN ENEMY SPRITES OFF
+            animator.setBool("Blast", true);
+            clearEnemySprites();
+            updateEnemySpawnRates();
+            updateSpawnDistance();
+            gunReady = false;
+            currentGunCharge = 0;
         }
 
-        generateHoleSprites();
-        
+        updateHoleSprites();
+        updateEnemySprites();
+
+
+
     }
 
 //**********************************************************************************************************************
@@ -158,16 +190,183 @@ public class GameController : MonoBehaviour
         upperSpawnBound = 100/playerScore;
     }
 
+    private void setEnemySprites(bool[] attacking, int[] activeEnemies)
+    {
+        // First Enemy
+        if (activeEnemies[0] == 1)
+        {
+            if (attacking[0])
+            {
+                slow1 = "ATTACK";
+                attacking[0] = false;
+            }
+            else
+            {
+                slow1 = "IDLE";
+            }
+        }
+        else if (activeEnemies[0] == 2)
+        {
+            if (attacking[0])
+            {
+                med1 = "ATTACK";
+                attacking[0] = false;
+            }
+            else
+            {
+                med1 = "IDLE";
+            }
+        }
+        else if (activeEnemies[0] == 3)
+        {
+            if (attacking[0])
+            {
+                fast1 = "ATTACK";
+                attacking[0] = false;
+            }
+            else
+            {
+                fast1 = "IDLE";
+            }
+        }
+
+        // Second Enemy
+        if (activeEnemies[1] == 1)
+        {
+            if (attacking[1])
+            {
+                slow2 = "ATTACK";
+                attacking[1] = false;
+            }
+            else
+            {
+                slow2 = "IDLE";
+            }
+        }
+        else if (activeEnemies[1] == 2)
+        {
+            if (attacking[1])
+            {
+                med2 = "ATTACK";
+                attacking[1] = false;
+            }
+            else
+            {
+                med2 = "IDLE";
+            }
+        }
+        else if (activeEnemies[1] == 3)
+        {
+            if (attacking[1])
+            {
+                fast2 = "ATTACK";
+                attacking[1] = false;
+            }
+            else
+            {
+                fast2 = "IDLE";
+            }
+        }
+
+        // Third Enemy
+        if (activeEnemies[2] == 1)
+        {
+            if (attacking[2])
+            {
+                slow3 = "ATTACK";
+                attacking[2] = false;
+            }
+            else
+            {
+                slow3 = "IDLE";
+            }
+        }
+        else if (activeEnemies[2] == 2)
+        {
+            if (attacking[2])
+            {
+                med3 = "ATTACK";
+                attacking[2] = false;
+            }
+            else
+            {
+                med3 = "IDLE";
+            }
+        }
+        else if (activeEnemies[2] == 3)
+        {
+            if (attacking[2])
+            {
+                fast3 = "ATTACK";
+                attacking[2] = false;
+            }
+            else
+            {
+                fast3 = "IDLE";
+            }
+        }
+    }
+
+    private void clearEnemySprites()
+    {
+        slow1 = "OFF";
+        slow2 = "OFF";
+        slow3 = "OFF";
+        med1 = "OFF";
+        med2 = "OFF";
+        med3 = "OFF";
+        fast1 = "OFF";
+        fast2 = "OFF";
+        fast3 = "OFF";
+    }
+
+    private void updateEnemySprites()
+    {
+        animator.SetString("slow1", slow1);
+        animator.SetString("slow2", slow2);
+        animator.SetString("slow3", slow3);
+
+        animator.SetString("med1", med1);
+        animator.SetString("med2", med2);
+        animator.SetString("med3", med3);
+
+        animator.SetString("fast1", fast1);
+        animator.SetString("fast2", fast2);
+        animator.SetString("fast3", fast3);
+    }
+
 //**********************************************************************************************************************
 // Ship Status
 //**********************************************************************************************************************
 
-    void generateHoleSprites()
+    void updateHoleSprites()
     {
         for (int i = 0; i < numOfHoles; i++)
         {
             // TO-DO PLAY CORRECT SPRITE BASED ON HOLE STATUSES
         }
     }
+
+    private void updateOxygen()
+    {
+        if (numHoles > 0)
+        {
+            oxygenLevel -= numHoles / 2;
+        }
+    }
+
+    public void updateGunCharge()
+    {
+        if (blastWasPressed)
+        {
+            currentGunCharge++;
+        }
+
+        if (currentGunCharge == 5)
+        {
+            gunReady = true;
+        }
+    }
+
 
 }
