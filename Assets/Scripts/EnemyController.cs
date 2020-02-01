@@ -44,7 +44,7 @@ public class EnemyController : MonoBehaviour
         this.currentDistance = distance;
         this.createEncounter();
         this.startEncounter();
-    }
+    }  
 
     //give certain score amounts for enemy types
 
