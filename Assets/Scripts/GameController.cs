@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using UnityEngine.UI;
 using UnityEngine;
 
 public class GameController : MonoBehaviour {
@@ -90,6 +91,8 @@ public class GameController : MonoBehaviour {
     // Oxygen Tank
     public GameObject oxy_tank_obj;
     private Animator oxy_tank_anim;
+
+    public Text scoreText;
 
     // Hole Objects
     public GameObject hole_obj_0;
@@ -233,6 +236,7 @@ public class GameController : MonoBehaviour {
 
         timeToDecay++;
         counter++;
+        scoreText.text = playerScore.ToString();
         /*
         if (counter > 120)
         {
@@ -321,7 +325,7 @@ public class GameController : MonoBehaviour {
 
     void updateDistance() {
         distanceTravelled += shipSpeed;
-        playerScore += (int)shipSpeed;
+        playerScore = (int)distanceTravelled;
     }
 
     // Ship accelerates 5x faster then it decelerates
@@ -689,6 +693,15 @@ public class GameController : MonoBehaviour {
             return false;
         }
     }
+
+    /*void OnGUI()
+    {
+        int x = 10;
+        int y = 10;
+        int w = 100;
+        int h = 20;
+        GUI.Label(new Rect(x, y, w, h), "Score: " + playerScore);
+    }*/
 
 
 }
