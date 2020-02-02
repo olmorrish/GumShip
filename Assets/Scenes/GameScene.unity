@@ -1225,6 +1225,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Hole_Bottom_1
       objectReference: {fileID: 0}
+    - target: {fileID: 8555188389124882472, guid: 633bb69401266064496c39eb44d04e5d,
+        type: 3}
+      propertyPath: m_Size.x
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 8555188389124882476, guid: 633bb69401266064496c39eb44d04e5d,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -2843,10 +2848,8 @@ MonoBehaviour:
   fireButton: {fileID: 1365007124}
   thrust: 175
   rotationalTorque: 400
-  maxGumballs: 5
   chewsToStickyMax: 20
   chewsUntilSticky: 0
-  numberGumballs: 0
   holeChecker: {fileID: 202936129}
   whatIsHole:
     serializedVersion: 2

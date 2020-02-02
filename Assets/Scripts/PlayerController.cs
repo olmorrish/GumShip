@@ -59,6 +59,7 @@ public class PlayerController : MonoBehaviour
         col = GetComponent<Collider2D>();
         animPlayer = GetComponent<Animator>();
         animGum = gumOverlay.GetComponent<Animator>();
+        hasGumInMouth = false;
         animGum.SetBool("hasGumInMouth", false);
 
         steeringCol = steering.GetComponent<Collider2D>();
@@ -109,15 +110,6 @@ public class PlayerController : MonoBehaviour
         //All interactions via SpaceBar
         if (Input.GetKeyDown(KeyCode.Space)) {  //using keyDOWN since we want a trigger on each hit of the key
 
-            //1. Get gum into mouth before trying anything else
-            //if (!hasGumInMouth) {
-            //    Debug.Log("SpaceBar hit -> Player is putting gum in mouth.");
-                
-            //    animGum.SetBool("hasGumInMouth", true);
-            //    hasGumInMouth = true;
-            //    chewsUntilSticky = chewsToStickyMax;
-            //}
-
             //2. Dunk gum if you can
             if (hasGumInMouth && (chewsUntilSticky <= 0) && holeToPlug) {
                 Debug.Log("SpaceBar hit -> Player is plugging a hole.");
@@ -145,9 +137,11 @@ public class PlayerController : MonoBehaviour
             //5. Collect more gumballs
             else if (col.IsTouching(gumDispenserCol) && !hasGumInMouth) { 
                 Debug.Log("SpaceBar hit -> Player is getting a new gumball from the dispenser.");
+                chewsUntilSticky = chewsToStickyMax;
                 animDispenser.SetBool("Dispensing", true);
                 animPlayer.SetBool("isGettingGum", true);
                 animGum.SetBool("isGettingGum", true);
+                animGum.SetBool("hasGumInMouth", true);
                 hasGumInMouth = true;
             }
 
