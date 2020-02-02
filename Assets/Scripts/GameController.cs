@@ -364,8 +364,8 @@ public class GameController : MonoBehaviour {
     void updateEnemySpawnRates() {
         //lowerSpawnBound = 80 / playerScore;
         //upperSpawnBound = 100 / playerScore;
-        lowerSpawnBound = 80;
-        upperSpawnBound = 100;
+        lowerSpawnBound = 100;
+        upperSpawnBound = 120;
     }
 
     void setEnemySprites(bool[] attacking, int[] activeEnemies)
