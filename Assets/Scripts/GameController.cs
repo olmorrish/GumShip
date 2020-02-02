@@ -4,7 +4,9 @@ using UnityEngine;
 
 public class GameController : MonoBehaviour {
 
-    public float tankDepletionDivisor = 0.1f; //
+    public float tankDepletionDivisor = 0.1f;
+
+    private int oxyCounter; 
 
     // Speed Will be Represented From 10 to 20 to 30;
     public float shipSpeed;
@@ -143,6 +145,8 @@ public class GameController : MonoBehaviour {
     // Start is called before the first frame update
     void Start() {
 
+        oxyCounter = 0;
+
         underAttack = false;
 
         slow_anim_1 = slow_obj_1.GetComponent<Animator>();
@@ -221,7 +225,8 @@ public class GameController : MonoBehaviour {
 
     // Update is called once per frame
 
-    void FixedUpdate(){
+    void FixedUpdate()
+    {
 
         //Debug.Log("UpperBound: " + upperSpawnBound);
         //Debug.Log("LowerBound: " + lowerSpawnBound);
@@ -241,7 +246,7 @@ public class GameController : MonoBehaviour {
         updateDistance();
 
         updateShipSpeed();
-        
+
         // This updates the enemy encounter
         // Should set correct enemy sprites to active
         if (underAttack)
@@ -267,12 +272,12 @@ public class GameController : MonoBehaviour {
 
             for (int i = 0; i < 3; i++)
             {
-               // Debug.Log("Attackers: " + enemyEncounter.attacking[i]);
+                // Debug.Log("Attackers: " + enemyEncounter.attacking[i]);
             }
 
             for (int i = 0; i < 3; i++)
             {
-               // Debug.Log("Typers: " + enemyEncounter.typesOfEnemiesInSlots[i]);
+                // Debug.Log("Typers: " + enemyEncounter.typesOfEnemiesInSlots[i]);
             }
 
             setEnemySprites(enemyEncounter.attacking, enemyEncounter.typesOfEnemiesInSlots);
@@ -296,7 +301,13 @@ public class GameController : MonoBehaviour {
 
         updateHoleSprites();
         updateEnemySprites();
-        updateOxygen();
+
+        oxyCounter++;
+        if (oxyCounter > 60) { 
+
+            updateOxygen();
+            oxyCounter = 0;
+         }
 
     }
 
