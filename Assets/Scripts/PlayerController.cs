@@ -45,6 +45,8 @@ public class PlayerController : MonoBehaviour
     private Collider2D defensesCol;
     private Collider2D gumDispenserCol;
 
+    string TryingToFill; 
+
    // public Text textObject;
    // public GameObject bubbleUI;
    // private Animator animBubbleUI;
@@ -96,7 +98,8 @@ public class PlayerController : MonoBehaviour
                 Debug.Log(col.gameObject);
                 //Changes
 
-               // bool hello = gameControllerObj.canBeFilled("hello");
+                TryingToFill = col.gameObject.name;
+                // bool hello = gameControllerObj.canBeFilled("hello");
                 //
                 holeToPlug = true;
             }
@@ -136,9 +139,10 @@ public class PlayerController : MonoBehaviour
                 animGum.SetBool("isDunking", true);
                 animGum.SetBool("hasGumInMouth", false);
                 hasGumInMouth = false;
-                bool hello = controller.canBeFilled(col.gameObject.name);
-                
+
                 //HERE
+
+                bool hello = controller.canBeFilled(TryingToFill);
             }
 
             //3. Fire defense system
