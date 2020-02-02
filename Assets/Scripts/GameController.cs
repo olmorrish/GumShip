@@ -618,9 +618,64 @@ public class GameController : MonoBehaviour {
 
     public bool canBeFilled(string nameHole)
     {
+        int numHole = -1;
 
         Debug.Log("NAAAAAAAAAAAAAAAAAA: " + nameHole);
-        /*
+        if ("Hole_0" == nameHole)
+        {
+            numHole = 0;
+        }
+        else if ("Hole_1" == nameHole)
+        {
+            numHole = 1;
+        }
+        else if ("Hole_2" == nameHole)
+        {
+            numHole = 2;
+        }
+        else if ("Hole_3" == nameHole)
+        {
+            numHole = 3;
+        }
+        else if ("Hole_4" == nameHole)
+        {
+            numHole = 4;
+        }
+        else if ("Hole_5" == nameHole)
+        {
+            numHole = 5;
+        }
+        else if ("Hole_6" == nameHole)
+        {
+            numHole = 6;
+        }
+        else if ("Hole_7" == nameHole)
+        {
+            numHole = 7;
+        }
+        else if ("Hole_8" == nameHole)
+        {
+            numHole = 8;
+        }
+        else if ("Hole_9" == nameHole)
+        {
+            numHole = 9;
+        }
+        else if ("Hole_10" == nameHole)
+        {
+            numHole = 10;
+        }
+        else if ("Hole_11" == nameHole)
+        {
+            numHole = 11;
+        }
+
+        if (numHole == -1)
+        {
+            return false;
+        }
+
+        
         // If there is a hole
         if ((holes[numHole] == 1) || (holes[numHole] == 2))
         {
@@ -633,8 +688,6 @@ public class GameController : MonoBehaviour {
         {
             return false;
         }
-        */
-        return true;
     }
 
 

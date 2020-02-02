@@ -45,13 +45,13 @@ public class PlayerController : MonoBehaviour
     private Collider2D defensesCol;
     private Collider2D gumDispenserCol;
 
-    public Text textObject;
-    public GameObject bubbleUI;
-    private Animator animBubbleUI;
+   // public Text textObject;
+   // public GameObject bubbleUI;
+   // private Animator animBubbleUI;
     
     // Start is called before the first frame update
     void Start(){
-        animBubbleUI = bubbleUI.GetComponent<Animator>();
+       // animBubbleUI = bubbleUI.GetComponent<Animator>();
 
         controller = gameControllerObj.GetComponent<GameController>();
         animDispenser = bubbleGumDispenser.GetComponent<Animator>();
@@ -80,8 +80,8 @@ public class PlayerController : MonoBehaviour
     void Update(){
 
         //update text
-        textObject.text = chewsUntilSticky.ToString();
-        animBubbleUI.SetInteger("chewsLeft", chewsUntilSticky);
+       // textObject.text = chewsUntilSticky.ToString();
+        //animBubbleUI.SetInteger("chewsLeft", chewsUntilSticky);
 
         //default animator resets
         animPlayer.SetBool("isGettingGum", false);
@@ -95,7 +95,7 @@ public class PlayerController : MonoBehaviour
             if (whatIsHole.Contains(col.gameObject.layer)) {  //utilizes extension method!
                 Debug.Log(col.gameObject);
                 //Changes
-                bool hello = controller.canBeFilled(col.gameObject.name);
+
                // bool hello = gameControllerObj.canBeFilled("hello");
                 //
                 holeToPlug = true;
@@ -122,37 +122,44 @@ public class PlayerController : MonoBehaviour
         }
 
         //special case for idle animation update
-        if(rb.velocity.magnitude < 0.1) {
-        }
+        //if(rb.velocity.magnitude < 0.1) {
+        //}
 
         //All interactions via SpaceBar
         if (Input.GetKeyDown(KeyCode.Space)) {  //using keyDOWN since we want a trigger on each hit of the key
 
             //2. Dunk gum if you can
-            if (hasGumInMouth && (chewsUntilSticky <= 0) && holeToPlug) {
+            if (hasGumInMouth && (chewsUntilSticky <= 0) && holeToPlug)
+            {
                 Debug.Log("SpaceBar hit -> Player is plugging a hole.");
                 animPlayer.SetBool("isDunking", true);
                 animGum.SetBool("isDunking", true);
                 animGum.SetBool("hasGumInMouth", false);
                 hasGumInMouth = false;
+                bool hello = controller.canBeFilled(col.gameObject.name);
+                
+                //HERE
             }
 
             //3. Fire defense system
-            else if(col.IsTouching(defensesCol)){
+            else if (col.IsTouching(defensesCol))
+            {
                 Debug.Log("SpaceBar hit -> Player is activating defenses.");
                 animFireButton.SetBool("isPushed", true);
                 controller.blastWasPressed = true;
             }
 
             //4. Speed up the ship
-            else if (col.IsTouching(steeringCol)) {
+            else if (col.IsTouching(steeringCol))
+            {
                 Debug.Log("SpaceBar hit -> Player is piloting ship.");
                 animGoButton.SetBool("isPushed", true);
                 controller.goWasPressed = true;
             }
 
             //5. Collect more gumballs
-            else if (col.IsTouching(gumDispenserCol) && !hasGumInMouth) { 
+            else if (col.IsTouching(gumDispenserCol) && !hasGumInMouth)
+            {
                 Debug.Log("SpaceBar hit -> Player is getting a new gumball from the dispenser.");
                 chewsUntilSticky = chewsToStickyMax;
                 animDispenser.SetBool("Dispensing", true);
@@ -163,11 +170,13 @@ public class PlayerController : MonoBehaviour
             }
 
             //6. No other options; player must be trying to chew the gum
-            else{
+            else
+            {
                 Debug.Log("SpaceBar hit -> Player is chewing gum.");
                 animPlayer.SetBool("isChewing", true);
-                animGum.SetBool("isChewing", true);   
-                if (chewsUntilSticky > 0) {
+                animGum.SetBool("isChewing", true);
+                if (chewsUntilSticky > 0)
+                {
                     chewsUntilSticky--;
                 }
             }
