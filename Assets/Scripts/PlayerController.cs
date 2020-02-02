@@ -25,20 +25,18 @@ public class PlayerController : MonoBehaviour
     //movement variables
     public float thrust;
     public float rotationalTorque;
-    public int maxGumballs;
 
     //gum status variables
-    public int chewsToStickyMax = 10;
+    public int chewsToStickyMax = 20;
     public int chewsUntilSticky;
-    public int numberGumballs = 0;
-    private bool hasGumInMouth = false; //unique animation
+    private bool hasGumInMouth = false; 
     //public int chewCountdown = 72;
 
     //hole detection variables
     private bool holeToPlug = false;
     public Transform holeChecker;
     public LayerMask whatIsHole;
-    const float holeCheckRadius = 0.1f;   //radius around point to collision-check
+    const float holeCheckRadius = 0.05f;   //radius around point to collision-check
 
     //references to interactable objects and their colliders
     public GameObject steering;
@@ -112,18 +110,16 @@ public class PlayerController : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Space)) {  //using keyDOWN since we want a trigger on each hit of the key
 
             //1. Get gum into mouth before trying anything else
-            if (!hasGumInMouth && numberGumballs > 0) {
-                Debug.Log("SpaceBar hit -> Player is putting gum in mouth.");
-                animPlayer.SetBool("isGettingGum", true);
-                animGum.SetBool("isGettingGum", true);
-                animGum.SetBool("hasGumInMouth", true);
-                hasGumInMouth = true;
-                numberGumballs--;
-                chewsUntilSticky = chewsToStickyMax;
-            }
+            //if (!hasGumInMouth) {
+            //    Debug.Log("SpaceBar hit -> Player is putting gum in mouth.");
+                
+            //    animGum.SetBool("hasGumInMouth", true);
+            //    hasGumInMouth = true;
+            //    chewsUntilSticky = chewsToStickyMax;
+            //}
 
             //2. Dunk gum if you can
-            else if (hasGumInMouth && (chewsUntilSticky <= 0) && holeToPlug) {
+            if (hasGumInMouth && (chewsUntilSticky <= 0) && holeToPlug) {
                 Debug.Log("SpaceBar hit -> Player is plugging a hole.");
                 animPlayer.SetBool("isDunking", true);
                 animGum.SetBool("isDunking", true);
@@ -135,7 +131,6 @@ public class PlayerController : MonoBehaviour
             //3. Fire defense system
             else if(col.IsTouching(defensesCol)){
                 Debug.Log("SpaceBar hit -> Player is activating defenses.");
-                animGum.SetBool("isInteracting", true);
                 animFireButton.SetBool("isPushed", true);
                 controller.blastWasPressed = true;
             }
@@ -143,17 +138,17 @@ public class PlayerController : MonoBehaviour
             //4. Speed up the ship
             else if (col.IsTouching(steeringCol)) {
                 Debug.Log("SpaceBar hit -> Player is piloting ship.");
-                animGum.SetBool("isInteracting", true);
                 animGoButton.SetBool("isPushed", true);
                 controller.goWasPressed = true;
             }
 
             //5. Collect more gumballs
-            else if (col.IsTouching(gumDispenserCol) && (numberGumballs < maxGumballs)) { 
+            else if (col.IsTouching(gumDispenserCol) && !hasGumInMouth) { 
                 Debug.Log("SpaceBar hit -> Player is getting a new gumball from the dispenser.");
-                animGum.SetBool("isInteracting", true);
                 animDispenser.SetBool("Dispensing", true);
-                numberGumballs++;
+                animPlayer.SetBool("isGettingGum", true);
+                animGum.SetBool("isGettingGum", true);
+                hasGumInMouth = true;
             }
 
             //6. No other options; player must be trying to chew the gum
@@ -169,12 +164,10 @@ public class PlayerController : MonoBehaviour
 
         }
         else {  //Space is not hit, so the player cannot be chewing or interacting with anything
-            animPlayer.SetBool("isInteracting", false);   //TODO ensure this doesn't break shit
-            animPlayer.SetBool("isDunking", false);       //TODO ensure this doesn't break shit
+            animPlayer.SetBool("isDunking", false);       //TODO ensure this doesn't break 
             animPlayer.SetBool("isChewing", false);
 
-            animGum.SetBool("isInteracting", false);   //TODO ensure this doesn't break shit
-            animGum.SetBool("isDunking", false);       //TODO ensure this doesn't break shit
+            animGum.SetBool("isDunking", false);       //TODO ensure this doesn't break 
             animGum.SetBool("isChewing", false);
 
             animDispenser.SetBool("Dispensing", false);
