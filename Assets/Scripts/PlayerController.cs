@@ -16,9 +16,11 @@ public class PlayerController : MonoBehaviour
     public int maxGumballs;
 
     //gum status variables
-    private int chewsUntilSticky = 10;
+    public int chewsToStickyMax = 10;
+    public int chewsUntilSticky;
     public int numberGumballs = 0;
     private bool hasGumInMouth = false; //unique animation
+    public int chewCountdown = 72;
 
     //hole detection variables
     private bool holeToPlug = false;
@@ -36,10 +38,13 @@ public class PlayerController : MonoBehaviour
 
     // Start is called before the first frame update
     void Start(){
+        chewsUntilSticky = chewsToStickyMax;
+
         rb = GetComponent<Rigidbody2D>();
         col = GetComponent<Collider2D>();
         animPlayer = GetComponent<Animator>();
         animGum = gumOverlay.GetComponent<Animator>();
+        animGum.SetBool("hasGumInMouth", false);
 
         steeringCol = steering.GetComponent<Collider2D>();
         defensesCol = defenses.GetComponent<Collider2D>();
@@ -47,7 +52,7 @@ public class PlayerController : MonoBehaviour
     }
 
     // Update is called once per frame
-    void FixedUpdate(){
+    void Update(){
 
         //default animator resets
         animPlayer.SetBool("isGettingGum", false);
@@ -91,22 +96,24 @@ public class PlayerController : MonoBehaviour
             animGum.SetBool("isMoving", true);
         }
 
-        //special case for idle animation update; have to check for absense of primary inputs due to my dumb code structure
-        if(!(Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.D))) {
+        //special case for idle animation update
+        if(rb.velocity.magnitude < 0.1) {
             animPlayer.SetBool("isMoving", false);
             animGum.SetBool("isMoving", false);
         }
 
         //All interactions via SpaceBar
-        if (Input.GetKeyDown(KeyCode.Space) || Input.GetKeyUp(KeyCode.Space)) {  //using keyDOWN since we want a trigger on each hit of the key
+        if (Input.GetKeyDown(KeyCode.Space)) {  //using keyDOWN since we want a trigger on each hit of the key
 
             //1. Get gum into mouth before trying anything else
             if (!hasGumInMouth && numberGumballs > 0) {
                 Debug.Log("SpaceBar hit -> Player is putting gum in mouth.");
                 animPlayer.SetBool("isGettingGum", true);
                 animGum.SetBool("isGettingGum", true);
+                animGum.SetBool("hasGumInMouth", true);
                 hasGumInMouth = true;
                 numberGumballs--;
+                chewsUntilSticky = chewsToStickyMax;
             }
 
             //2. Dunk gum if you can
@@ -114,6 +121,7 @@ public class PlayerController : MonoBehaviour
                 Debug.Log("SpaceBar hit -> Player is plugging a hole.");
                 animPlayer.SetBool("isDunking", true);
                 animGum.SetBool("isDunking", true);
+                animGum.SetBool("hasGumInMouth", false);
                 hasGumInMouth = false;
                 //TODO interaction with the hole object
             }
@@ -134,27 +142,30 @@ public class PlayerController : MonoBehaviour
             else if (col.IsTouching(gumDispenserCol) && (numberGumballs < maxGumballs)) { 
                 Debug.Log("SpaceBar hit -> Player is getting a new gumball from the dispenser.");
                 numberGumballs++;
-
             }
 
             //6. No other options; player must be trying to chew the gum
-            else {
+            else{
                 Debug.Log("SpaceBar hit -> Player is chewing gum.");
                 animPlayer.SetBool("isChewing", true);
                 animGum.SetBool("isChewing", true);
+                
                 if (chewsUntilSticky > 0) {
                     chewsUntilSticky--;
                 }
             }
+
+
         }
         else {  //Space is not hit, so the player cannot be chewing or interacting with anything
-            animPlayer.SetBool("isChewing", false);
+            
             animPlayer.SetBool("isInteracting", false);   //TODO ensure this doesn't break shit
             animPlayer.SetBool("isDunking", false);       //TODO ensure this doesn't break shit
-
-            animGum.SetBool("isChewing", false);
+            animPlayer.SetBool("isChewing", false);
+            
             animGum.SetBool("isInteracting", false);   //TODO ensure this doesn't break shit
             animGum.SetBool("isDunking", false);       //TODO ensure this doesn't break shit
+            animGum.SetBool("isChewing", false);
         }
     }
 }

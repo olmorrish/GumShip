@@ -1088,9 +1088,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gumOverlay: {fileID: 1716145048}
   thrust: 200
-  rotationalTorque: 0.2
+  rotationalTorque: 1
   maxGumballs: 5
+  chewsToStickyMax: 20
+  chewsUntilSticky: 0
   numberGumballs: 0
+  chewCountdown: 60
   holeChecker: {fileID: 202936129}
   whatIsHole:
     serializedVersion: 2
@@ -1110,14 +1113,14 @@ Rigidbody2D:
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
-  m_Mass: 5
+  m_Mass: 1
   m_LinearDrag: 2
   m_AngularDrag: 0.5
   m_GravityScale: 0
   m_Material: {fileID: 6200000, guid: daf2536ac93ab7d49b272ab928640e66, type: 2}
   m_Interpolate: 0
   m_SleepingMode: 1
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
   m_Constraints: 0
 --- !u!212 &873250745
 SpriteRenderer:
@@ -1158,7 +1161,8 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 210a8a258e8591d4e94e5c4bf92b9b4e, type: 3}
+  m_Sprite: {fileID: -5258030014049578038, guid: 87b55e5cf4b802e4d8414b0a9c5c288b,
+    type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -1178,7 +1182,7 @@ Transform:
   m_GameObject: {fileID: 873250742}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 1.57, y: 0, z: 0}
-  m_LocalScale: {x: 3, y: 3, z: 1}
+  m_LocalScale: {x: 10, y: 10, z: 1}
   m_Children:
   - {fileID: 1716145049}
   - {fileID: 202936129}
@@ -1960,7 +1964,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1716145048}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -1.57, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 873250746}
@@ -2029,7 +2033,7 @@ SpriteRenderer:
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 1, y: 1}
+  m_Size: {x: 8.333333, y: 8.333333}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 0
@@ -2091,10 +2095,31 @@ PrefabInstance:
       propertyPath: m_Name
       value: Hole
       objectReference: {fileID: 0}
+    - target: {fileID: 8555188389124882475, guid: 633bb69401266064496c39eb44d04e5d,
+        type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 0480e3b6fd8a7ae4094b12ef2dda6346,
+        type: 3}
+    - target: {fileID: 8555188389124882475, guid: 633bb69401266064496c39eb44d04e5d,
+        type: 3}
+      propertyPath: m_Size.x
+      value: 18
+      objectReference: {fileID: 0}
+    - target: {fileID: 8555188389124882475, guid: 633bb69401266064496c39eb44d04e5d,
+        type: 3}
+      propertyPath: m_Size.y
+      value: 18
+      objectReference: {fileID: 0}
+    - target: {fileID: 8555188389124882475, guid: 633bb69401266064496c39eb44d04e5d,
+        type: 3}
+      propertyPath: m_WasSpriteAssigned
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 8555188389124882476, guid: 633bb69401266064496c39eb44d04e5d,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 13.925308
+      value: -83.3
       objectReference: {fileID: 0}
     - target: {fileID: 8555188389124882476, guid: 633bb69401266064496c39eb44d04e5d,
         type: 3}
@@ -2104,7 +2129,7 @@ PrefabInstance:
     - target: {fileID: 8555188389124882476, guid: 633bb69401266064496c39eb44d04e5d,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: -35.691315
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8555188389124882476, guid: 633bb69401266064496c39eb44d04e5d,
         type: 3}
