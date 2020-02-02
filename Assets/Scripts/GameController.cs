@@ -249,13 +249,13 @@ public class GameController : MonoBehaviour {
         if (underAttack)
         {
             enemyEncounter.updateAttack();
-
+            /*
             Debug.Log("NUMBER OF HOLES CREATED: " + enemyEncounter.numberOfHolesCreated);
             for (int i = 0; i < 3; i++)
             {
                 Debug.Log("Attackers: " + enemyEncounter.attacking[i]);
             }
-
+            */
             setEnemySprites(enemyEncounter.attacking, enemyEncounter.typesOfEnemiesInSlots);
             if (enemyEncounter.numberOfHolesCreated > 0)
             {
@@ -616,8 +616,11 @@ public class GameController : MonoBehaviour {
         }
     }
 
-    public bool canBeFilled(int numHole)
+    public bool canBeFilled(string nameHole)
     {
+
+        Debug.Log("NAAAAAAAAAAAAAAAAAA: " + nameHole);
+        /*
         // If there is a hole
         if ((holes[numHole] == 1) || (holes[numHole] == 2))
         {
@@ -630,6 +633,8 @@ public class GameController : MonoBehaviour {
         {
             return false;
         }
+        */
+        return true;
     }
 
 
