@@ -131,7 +131,7 @@ PrefabInstance:
     - target: {fileID: 8555188389124882471, guid: 633bb69401266064496c39eb44d04e5d,
         type: 3}
       propertyPath: m_Name
-      value: Hole_Bottom_6
+      value: Hole_0
       objectReference: {fileID: 0}
     - target: {fileID: 8555188389124882472, guid: 633bb69401266064496c39eb44d04e5d,
         type: 3}
@@ -951,7 +951,7 @@ PrefabInstance:
     - target: {fileID: 8555188389124882471, guid: 633bb69401266064496c39eb44d04e5d,
         type: 3}
       propertyPath: m_Name
-      value: Hole_Top_1
+      value: Hole_1
       objectReference: {fileID: 0}
     - target: {fileID: 8555188389124882472, guid: 633bb69401266064496c39eb44d04e5d,
         type: 3}
@@ -1168,7 +1168,7 @@ PrefabInstance:
     - target: {fileID: 8555188389124882471, guid: 633bb69401266064496c39eb44d04e5d,
         type: 3}
       propertyPath: m_Name
-      value: Hole_Bottom_1
+      value: Hole_7
       objectReference: {fileID: 0}
     - target: {fileID: 8555188389124882472, guid: 633bb69401266064496c39eb44d04e5d,
         type: 3}
@@ -1258,7 +1258,7 @@ PrefabInstance:
     - target: {fileID: 8555188389124882471, guid: 633bb69401266064496c39eb44d04e5d,
         type: 3}
       propertyPath: m_Name
-      value: Hole_Top_6
+      value: Hole_6
       objectReference: {fileID: 0}
     - target: {fileID: 8555188389124882472, guid: 633bb69401266064496c39eb44d04e5d,
         type: 3}
@@ -3987,7 +3987,7 @@ PrefabInstance:
     - target: {fileID: 8555188389124882471, guid: 633bb69401266064496c39eb44d04e5d,
         type: 3}
       propertyPath: m_Name
-      value: Hole_Top_3
+      value: Hole_3
       objectReference: {fileID: 0}
     - target: {fileID: 8555188389124882472, guid: 633bb69401266064496c39eb44d04e5d,
         type: 3}
@@ -4401,7 +4401,7 @@ PrefabInstance:
     - target: {fileID: 8555188389124882471, guid: 633bb69401266064496c39eb44d04e5d,
         type: 3}
       propertyPath: m_Name
-      value: Hole_Top_4
+      value: Hole_4
       objectReference: {fileID: 0}
     - target: {fileID: 8555188389124882472, guid: 633bb69401266064496c39eb44d04e5d,
         type: 3}
@@ -6319,7 +6319,7 @@ PrefabInstance:
     - target: {fileID: 8555188389124882471, guid: 633bb69401266064496c39eb44d04e5d,
         type: 3}
       propertyPath: m_Name
-      value: Hole_Bottom_4
+      value: Hole_10
       objectReference: {fileID: 0}
     - target: {fileID: 8555188389124882472, guid: 633bb69401266064496c39eb44d04e5d,
         type: 3}
@@ -6679,7 +6679,7 @@ PrefabInstance:
     - target: {fileID: 8555188389124882471, guid: 633bb69401266064496c39eb44d04e5d,
         type: 3}
       propertyPath: m_Name
-      value: Hole_Bottom_5
+      value: Hole_11
       objectReference: {fileID: 0}
     - target: {fileID: 8555188389124882472, guid: 633bb69401266064496c39eb44d04e5d,
         type: 3}
@@ -7040,7 +7040,7 @@ PrefabInstance:
     - target: {fileID: 8555188389124882471, guid: 633bb69401266064496c39eb44d04e5d,
         type: 3}
       propertyPath: m_Name
-      value: Hole_Top_5
+      value: Hole_5
       objectReference: {fileID: 0}
     - target: {fileID: 8555188389124882472, guid: 633bb69401266064496c39eb44d04e5d,
         type: 3}
@@ -7446,7 +7446,7 @@ PrefabInstance:
     - target: {fileID: 8555188389124882471, guid: 633bb69401266064496c39eb44d04e5d,
         type: 3}
       propertyPath: m_Name
-      value: Hole_Bottom_2
+      value: Hole_8
       objectReference: {fileID: 0}
     - target: {fileID: 8555188389124882472, guid: 633bb69401266064496c39eb44d04e5d,
         type: 3}
@@ -7739,7 +7739,7 @@ PrefabInstance:
     - target: {fileID: 8555188389124882471, guid: 633bb69401266064496c39eb44d04e5d,
         type: 3}
       propertyPath: m_Name
-      value: Hole_Top_2
+      value: Hole_2
       objectReference: {fileID: 0}
     - target: {fileID: 8555188389124882472, guid: 633bb69401266064496c39eb44d04e5d,
         type: 3}
@@ -7971,7 +7971,7 @@ PrefabInstance:
     - target: {fileID: 8555188389124882471, guid: 633bb69401266064496c39eb44d04e5d,
         type: 3}
       propertyPath: m_Name
-      value: Hole_Bottom_3
+      value: Hole_9
       objectReference: {fileID: 0}
     - target: {fileID: 8555188389124882472, guid: 633bb69401266064496c39eb44d04e5d,
         type: 3}
