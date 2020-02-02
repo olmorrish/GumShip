@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PlayerController : MonoBehaviour
 {
@@ -44,6 +45,8 @@ public class PlayerController : MonoBehaviour
     private Collider2D defensesCol;
     private Collider2D gumDispenserCol;
 
+    public Text textObject;
+    
     // Start is called before the first frame update
     void Start(){
         controller = gameControllerObj.GetComponent<GameController>();
@@ -71,6 +74,9 @@ public class PlayerController : MonoBehaviour
 
     // Update is called once per frame
     void Update(){
+
+        //update text
+        textObject.text = chewsUntilSticky.ToString();
 
         //default animator resets
         animPlayer.SetBool("isGettingGum", false);
