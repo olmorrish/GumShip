@@ -55,8 +55,28 @@ public class EnemyController
         int numOfHammerheads;
         int totalNumOfEnemies;
         int bias;
+        bool spawnWhale = false;
 
-        if (currentDistance < 500) //easy, only narwhals 1-3 with a bias to 1
+        //spawn 2 always (1 narwhal, 1 hammerhead), 50% chance for whale
+        attacking[0] = true;
+        attacking[1] = true;
+
+        typesOfEnemiesInSlots[0] = 1;
+        typesOfEnemiesInSlots[1] = 2;
+
+        if(Random.Range(1, 2) < 2)  //50% chance to spawn whale
+        {
+            attacking[2] = true;
+            typesOfEnemiesInSlots[2] = 3;
+        }
+        else
+        {
+            attacking[2] = false;
+            typesOfEnemiesInSlots[2] = 0;
+        }
+
+        
+        /*if (currentDistance < 500) //easy, only narwhals 1-3 with a bias to 1
         {
             numOfNarwhals = Random.Range(1, 3);
             bias = Random.Range(1, 2);
@@ -195,7 +215,7 @@ public class EnemyController
                     numOfWhale--;
                 }
             }
-        }
+        }*/
 
     }
 
