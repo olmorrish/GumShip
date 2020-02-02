@@ -225,41 +225,60 @@ public class EnemyController
     public void updateAttack()
     {
         nextHit++;
+        //narwhals shoot every 4 seconds
+        //hammerheads shoot every 9 seconds
+        //whales shoot every 15 seconds
 
-        if (nextHit > 500)  //for now one hit every ~3 seconds
+        int numOfNarwhals = 0;
+        int numOfHammerHeads = 0;
+        int numberOfWhales = 0;
+
+        for(int i = 0; i < 3; i++)
         {
-            nextHit = 0;    //reset nexthit
+            if (typesOfEnemiesInSlots[i] == 1)
+                numOfNarwhals++;
+            else if (typesOfEnemiesInSlots[i] == 2)
+                numOfHammerHeads++;
+            else if (typesOfEnemiesInSlots[i] == 3)
+                numberOfWhales++;
+        }
 
-            //if enemy exists in slot, set to attacking
-            for (int i = 0; i < 3; i++)
+
+        if((nextHit % 100 == 0) && numOfNarwhals > 0)   //narwhal shoot
+        {
+            for(int i = 0; i < 3; i++)
             {
-                if (typesOfEnemiesInSlots[i] > 0)
+                if (typesOfEnemiesInSlots[i] == 1)   //narwhal
                 {
                     attacking[i] = true;
+                    narwhalAttack();
                 }
             }
-
-            //enemy in the i'th slot is now attacking based on its type
+        }
+        
+        if((nextHit % 300 == 0) && numOfHammerHeads > 0)
+        {
             for (int i = 0; i < 3; i++)
             {
-                if (attacking[i])
+                if (typesOfEnemiesInSlots[i] == 2)   //hammerhead
                 {
-                    switch (typesOfEnemiesInSlots[i])
-                    {
-                        case 1: //narwhal
-                            narwhalAttack();
-                            break;
-                        case 2: //hammerhead
-                            hammerheadAttack();
-                            break;
-                        case 3: //whale
-                            whaleAttack();
-                            break;
-                    }
+                    attacking[i] = true;
+                    hammerheadAttack();
                 }
             }
 
+        }
 
+        if((nextHit % 500 == 0) && numberOfWhales > 0)
+        {
+            for (int i = 0; i < 3; i++)
+            {
+                if (typesOfEnemiesInSlots[i] == 3)   //whale
+                {
+                    attacking[i] = true;
+                    whaleAttack();
+                }
+            }
         }
 
     }
@@ -279,7 +298,7 @@ public class EnemyController
     /// <returns></returns> The number of holes created
     private void hammerheadAttack()
     {
-        numberOfHolesCreated += 3;
+        numberOfHolesCreated += 1;
     }
 
     /// <summary>
