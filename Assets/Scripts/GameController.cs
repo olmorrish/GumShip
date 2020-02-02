@@ -19,7 +19,7 @@ public class GameController : MonoBehaviour {
     // Turned on in PlayerController Class
     // Turned 
     public bool GoWasPressed;
-    public bool BlastWasPressed;
+    public bool blastWasPressed;
 
     public float distanceTravelled;
     public int playerScore;
@@ -44,23 +44,36 @@ public class GameController : MonoBehaviour {
     //  - 1 = Basic Hole
     //  - 2 = Gummy Hole
     //  - 3 = Plugged with Gum
+    // 14 is also hard coded in hole sprite function
     int[] holes = new int[14];
 
     public int currentGunCharge;
     public bool gunReady;
 
-    public int unchewedGum;
-    public bool gumReady;
-
-    private bool beingAttacked;
-
     public EnemyController enemyEncounter;
+
+    // Enemy Triggers
+    // Can be set to:
+    //      - ATTACK
+    //      - IDLE
+    //      - DYING
+    //      - OFF
+    public string slow1 = "OFF";
+    public string slow2 = "OFF";
+    public string slow3 = "OFF";
+
+    public string med1 = "OFF";
+    public string med2 = "OFF";
+    public string med3 = "OFF";
+
+    public string fast1 = "OFF";
+    public string fast2 = "OFF";
+    public string fast3 = "OFF";
 
     //private EnemyController enemyEncounter;
 
     // Start is called before the first frame update
     void Start() {
-        gumReady = false;
         GoWasPressed = false;
         playerScore = 0;
         shipSpeed = 0;
@@ -127,18 +140,7 @@ public class GameController : MonoBehaviour {
         updateHoleSprites();
         updateEnemySprites();
 
-
-
-
         updateEnemySpawnRates();
-
-        if (beingAttacked) {
-            //enemyEncounter.updateEnemies();
-        }
-
-        if (distanceTravelled < spawnDistance) {
-            //enemyEncounter = new EnemyController;
-        }
 
     }
 
@@ -328,7 +330,7 @@ public class GameController : MonoBehaviour {
 
     void updateHoleSprites()
     {
-        for (int i = 0; i < numOfHoles; i++)
+        for (int i = 0; i < 14; i++)
         {
             // TO-DO PLAY CORRECT SPRITE BASED ON HOLE STATUSES
         }
