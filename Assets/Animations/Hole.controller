@@ -92,6 +92,9 @@ AnimatorStateTransition:
   - m_ConditionMode: 2
     m_ConditionEvent: isHole
     m_EventTreshold: 0
+  - m_ConditionMode: 6
+    m_ConditionEvent: holeState
+    m_EventTreshold: 3
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: -5047363561986361254}
   m_Solo: 0
@@ -117,6 +120,9 @@ AnimatorStateTransition:
   - m_ConditionMode: 2
     m_ConditionEvent: isHole
     m_EventTreshold: 0
+  - m_ConditionMode: 6
+    m_ConditionEvent: holeState
+    m_EventTreshold: 3
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: -5047363561986361254}
   m_Solo: 0
@@ -140,8 +146,8 @@ AnimatorController:
   m_Name: Hole
   serializedVersion: 5
   m_AnimatorParameters:
-  - m_Name: isHole
-    m_Type: 4
+  - m_Name: holeState
+    m_Type: 3
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
@@ -170,6 +176,9 @@ AnimatorStateTransition:
   - m_ConditionMode: 1
     m_ConditionEvent: isHole
     m_EventTreshold: 0
+  - m_ConditionMode: 6
+    m_ConditionEvent: holeState
+    m_EventTreshold: 2
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: -8959439353189468159}
   m_Solo: 0
@@ -222,6 +231,9 @@ AnimatorStateTransition:
   - m_ConditionMode: 1
     m_ConditionEvent: isHole
     m_EventTreshold: 0
+  - m_ConditionMode: 6
+    m_ConditionEvent: holeState
+    m_EventTreshold: 1
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: 1233678236176502367}
   m_Solo: 0

@@ -4,30 +4,6 @@ using UnityEngine;
 
 public class GameController : MonoBehaviour {
 
-    public GameObject slow_obj_1;
-    public GameObject slow_obj_2;
-    public GameObject slow_obj_3;
-
-    public GameObject med_obj_1;
-    public GameObject med_obj_2;
-    public GameObject med_obj_3;
-
-    public GameObject fast_obj_1;
-    public GameObject fast_obj_2;
-    public GameObject fast_obj_3;
-
-    private Animator slow_anim_1;
-    private Animator slow_anim_2;
-    private Animator slow_anim_3;
-
-    private Animator med_anim_1;
-    private Animator med_anim_2;
-    private Animator med_anim_3;
-
-    private Animator fast_anim_1;
-    private Animator fast_anim_2;
-    private Animator fast_anim_3;
-
     // Speed Will be Represented From 10 to 20 to 30;
     public float shipSpeed;
 
@@ -59,7 +35,7 @@ public class GameController : MonoBehaviour {
 
 
     // Goes from 100 to 0 
-    public float oxygenLevel;
+    public int oxygenLevel;
 
     public int numHoles;
 
@@ -72,6 +48,8 @@ public class GameController : MonoBehaviour {
     //  - 3 = Plugged with Gum
     int[] holes;
     int numPossibleHoles = 14;
+
+    Animator[] holesAnim;
 
     public int currentGunCharge;
     public bool gunReady;
@@ -96,7 +74,65 @@ public class GameController : MonoBehaviour {
     private int fast2 = -1;
     private int fast3 = -1;
 
-    //private EnemyController enemyEncounter;
+    // Oxygen Tank
+    public GameObject oxy_tank_obj;
+    private Animator oxy_tank_anim;
+
+    // Hole Objects
+    public GameObject hole_obj_0;
+    public GameObject hole_obj_1;
+    public GameObject hole_obj_2;
+    public GameObject hole_obj_3;
+    public GameObject hole_obj_4;
+    public GameObject hole_obj_5;
+    public GameObject hole_obj_6;
+    public GameObject hole_obj_7;
+    public GameObject hole_obj_8;
+    public GameObject hole_obj_9;
+    public GameObject hole_obj_10;
+    public GameObject hole_obj_11;
+    public GameObject hole_obj_12;
+    public GameObject hole_obj_13;
+
+    private Animator hole_anim_0;
+    private Animator hole_anim_1;
+    private Animator hole_anim_2;
+    private Animator hole_anim_3;
+    private Animator hole_anim_4;
+    private Animator hole_anim_5;
+    private Animator hole_anim_6;
+    private Animator hole_anim_7;
+    private Animator hole_anim_8;
+    private Animator hole_anim_9;
+    private Animator hole_anim_10;
+    private Animator hole_anim_11;
+    private Animator hole_anim_12;
+    private Animator hole_anim_13;
+
+    // Enemy Objects
+    public GameObject slow_obj_1;
+    public GameObject slow_obj_2;
+    public GameObject slow_obj_3;
+
+    public GameObject med_obj_1;
+    public GameObject med_obj_2;
+    public GameObject med_obj_3;
+
+    public GameObject fast_obj_1;
+    public GameObject fast_obj_2;
+    public GameObject fast_obj_3;
+
+    private Animator slow_anim_1;
+    private Animator slow_anim_2;
+    private Animator slow_anim_3;
+
+    private Animator med_anim_1;
+    private Animator med_anim_2;
+    private Animator med_anim_3;
+
+    private Animator fast_anim_1;
+    private Animator fast_anim_2;
+    private Animator fast_anim_3;
 
     // Start is called before the first frame update
     void Start() {
@@ -112,14 +148,50 @@ public class GameController : MonoBehaviour {
         fast_anim_2 = fast_obj_2.GetComponent<Animator>();
         fast_anim_3 = fast_obj_3.GetComponent<Animator>();
 
+        hole_anim_0 = hole_obj_0.GetComponent<Animator>();
+        hole_anim_1 = hole_obj_1.GetComponent<Animator>();
+        hole_anim_2 = hole_obj_2.GetComponent<Animator>();
+        hole_anim_3 = hole_obj_3.GetComponent<Animator>();
+        hole_anim_4 = hole_obj_4.GetComponent<Animator>();
+        hole_anim_5 = hole_obj_5.GetComponent<Animator>();
+        hole_anim_6 = hole_obj_6.GetComponent<Animator>();
+        hole_anim_7 = hole_obj_7.GetComponent<Animator>();
+        hole_anim_8 = hole_obj_8.GetComponent<Animator>();
+        hole_anim_9 = hole_obj_9.GetComponent<Animator>();
+        hole_anim_10 = hole_obj_10.GetComponent<Animator>();
+        hole_anim_11 = hole_obj_11.GetComponent<Animator>();
+        hole_anim_12 = hole_obj_12.GetComponent<Animator>();
+        hole_anim_13 = hole_obj_13.GetComponent<Animator>();
+
+        oxy_tank_anim = oxy_tank_obj.GetComponent<Animator>();
+
+        holesAnim = new Animator[numPossibleHoles];
+
+        holesAnim[0] = hole_anim_0;
+        holesAnim[1] = hole_anim_1;
+        holesAnim[2] = hole_anim_2;
+        holesAnim[3] = hole_anim_3;
+        holesAnim[4] = hole_anim_4;
+        holesAnim[5] = hole_anim_5;
+        holesAnim[6] = hole_anim_6;
+        holesAnim[7] = hole_anim_7;
+        holesAnim[8] = hole_anim_8;
+        holesAnim[9] = hole_anim_9;
+        holesAnim[10] = hole_anim_10;
+        holesAnim[11] = hole_anim_11;
+        holesAnim[12] = hole_anim_12;
+        holesAnim[13] = hole_anim_13;
+
         goWasPressed = false;
         playerScore = 1;
         shipSpeed = 0;
         numHoles = 0;
         currentGunCharge = 0;
-        oxygenLevel = 100;
-        holes = new int[14];
+        oxygenLevel = 112;
+        holes = new int[numPossibleHoles];
         fillHole = -1;
+
+        oxy_tank_anim.SetInteger("TankLevel", oxygenLevel);
 
         updateSpawnDistance();
 
@@ -146,7 +218,6 @@ public class GameController : MonoBehaviour {
         
         // This updates the enemy encounter
         // Should set correct enemy sprites to active
-        // 
         if (enemyEncounter != null)
         {
             enemyEncounter.updateAttack();
@@ -185,7 +256,7 @@ public class GameController : MonoBehaviour {
 
         updateHoleSprites();
         updateEnemySprites();
-
+        updateOxygen();
         updateEnemySpawnRates();
 
     }
@@ -396,7 +467,7 @@ public class GameController : MonoBehaviour {
     {
         for (int i = 0; i < numPossibleHoles; i++)
         {
-            // TO-DO PLAY CORRECT SPRITE BASED ON HOLE STATUSES
+            holesAnim[i].SetInteger("holeState", holes[i]);
         }
     }
 
@@ -430,6 +501,8 @@ public class GameController : MonoBehaviour {
         if (numHoles > 0)
         {
             oxygenLevel -= numHoles / 2;
+            oxy_tank_anim.SetInteger("TankLevel", oxygenLevel);
+
         }
     }
 
