@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class GameController : MonoBehaviour {
 
+    public float tankDepletionDivisor = 0.1f; //
+
     // Speed Will be Represented From 10 to 20 to 30;
     public float shipSpeed;
 
@@ -51,7 +53,7 @@ public class GameController : MonoBehaviour {
     //  - 2 = Gummy Hole
     //  - 3 = Plugged with Gum
     int[] holes;
-    int numPossibleHoles = 14;
+    int numPossibleHoles = 12;
 
     Animator[] holesAnim;
 
@@ -95,8 +97,8 @@ public class GameController : MonoBehaviour {
     public GameObject hole_obj_9;
     public GameObject hole_obj_10;
     public GameObject hole_obj_11;
-    public GameObject hole_obj_12;
-    public GameObject hole_obj_13;
+    //public GameObject hole_obj_12;
+    //public GameObject hole_obj_13;
 
     private Animator hole_anim_0;
     private Animator hole_anim_1;
@@ -110,8 +112,8 @@ public class GameController : MonoBehaviour {
     private Animator hole_anim_9;
     private Animator hole_anim_10;
     private Animator hole_anim_11;
-    private Animator hole_anim_12;
-    private Animator hole_anim_13;
+    //private Animator hole_anim_12;
+    //private Animator hole_anim_13;
 
     // Enemy Objects
     public GameObject slow_obj_1;
@@ -167,8 +169,8 @@ public class GameController : MonoBehaviour {
         hole_anim_9 = hole_obj_9.GetComponent<Animator>();
         hole_anim_10 = hole_obj_10.GetComponent<Animator>();
         hole_anim_11 = hole_obj_11.GetComponent<Animator>();
-        hole_anim_12 = hole_obj_12.GetComponent<Animator>();
-        hole_anim_13 = hole_obj_13.GetComponent<Animator>();
+        //hole_anim_12 = hole_obj_12.GetComponent<Animator>();
+        //hole_anim_13 = hole_obj_13.GetComponent<Animator>();
 
         oxy_tank_anim = oxy_tank_obj.GetComponent<Animator>();
 
@@ -186,8 +188,8 @@ public class GameController : MonoBehaviour {
         holesAnim[9] = hole_anim_9;
         holesAnim[10] = hole_anim_10;
         holesAnim[11] = hole_anim_11;
-        holesAnim[12] = hole_anim_12;
-        holesAnim[13] = hole_anim_13;
+        //holesAnim[12] = hole_anim_12;
+        //holesAnim[13] = hole_anim_13;
 
         goWasPressed = false;
         playerScore = 1;
@@ -198,7 +200,7 @@ public class GameController : MonoBehaviour {
         holes = new int[numPossibleHoles];
         fillHole = -1;
 
-        oxy_tank_anim.SetInteger("TankLevel", oxygenLevel);
+       oxy_tank_anim.SetInteger("TankLevel", oxygenLevel);
 
         timeToDecay = 0;
 
@@ -497,17 +499,17 @@ public class GameController : MonoBehaviour {
 
     private void updateEnemySprites()
     {
-        Debug.Log("Slow1: " + slow1);
-        Debug.Log("Slow2: " + slow2);
-        Debug.Log("Slow3: " + slow3);
+        //Debug.Log("Slow1: " + slow1);
+        //Debug.Log("Slow2: " + slow2);
+        //Debug.Log("Slow3: " + slow3);
 
-        Debug.Log("Med1: " + med1);
-        Debug.Log("Med2: " + med2);
-        Debug.Log("Med3: " + med3);
+        //Debug.Log("Med1: " + med1);
+        //Debug.Log("Med2: " + med2);
+        //Debug.Log("Med3: " + med3);
 
-        Debug.Log("Fast1: " + fast1);
-        Debug.Log("Fast2: " + fast2);
-        Debug.Log("Fast3: " + fast3);
+        //Debug.Log("Fast1: " + fast1);
+        //Debug.Log("Fast2: " + fast2);
+        //Debug.Log("Fast3: " + fast3);
 
         slow_anim_1.SetInteger("slow1", slow1);
         slow_anim_2.SetInteger("slow2", slow2);

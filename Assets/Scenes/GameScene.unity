@@ -1130,6 +1130,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 43669f7da6bb5e741857854caa580d3c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  tankDepletionDivisor: 0.1
   shipSpeed: 0
   tierOne: 25
   tierTwo: 50
@@ -1146,7 +1147,7 @@ MonoBehaviour:
   currentGunCharge: 0
   gunReady: 0
   oxy_tank_obj: {fileID: 1507773692}
-  hole_obj_0: {fileID: 0}
+  hole_obj_0: {fileID: 39878638}
   hole_obj_1: {fileID: 429421703}
   hole_obj_2: {fileID: 1590000792}
   hole_obj_3: {fileID: 542531826}
@@ -1157,9 +1158,7 @@ MonoBehaviour:
   hole_obj_8: {fileID: 1368088554}
   hole_obj_9: {fileID: 2097037624}
   hole_obj_10: {fileID: 863584711}
-  hole_obj_11: {fileID: 0}
-  hole_obj_12: {fileID: 1142159022}
-  hole_obj_13: {fileID: 39878638}
+  hole_obj_11: {fileID: 1142159022}
   slow_obj_1: {fileID: 1287516981}
   slow_obj_2: {fileID: 741323623}
   slow_obj_3: {fileID: 1088736144}

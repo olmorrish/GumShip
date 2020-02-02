@@ -21,7 +21,6 @@ public class PlayerController : MonoBehaviour
     public GameObject fireButton;
     private Animator animFireButton;
 
-
     //movement variables
     public float thrust;
     public float rotationalTorque;
@@ -30,13 +29,12 @@ public class PlayerController : MonoBehaviour
     public int chewsToStickyMax = 20;
     public int chewsUntilSticky;
     private bool hasGumInMouth = false; 
-    //public int chewCountdown = 72;
 
     //hole detection variables
     private bool holeToPlug = false;
     public Transform holeChecker;
     public LayerMask whatIsHole;
-    const float holeCheckRadius = 0.05f;   //radius around point to collision-check
+    const float holeCheckRadius = 1f;   //radius around point to collision-check
 
     //references to interactable objects and their colliders
     public GameObject steering;
@@ -65,6 +63,10 @@ public class PlayerController : MonoBehaviour
         steeringCol = steering.GetComponent<Collider2D>();
         defensesCol = defenses.GetComponent<Collider2D>();
         gumDispenserCol = dispenser.GetComponent<Collider2D>();
+    }
+
+    private void OnDrawGizmos() {
+        Gizmos.DrawSphere(holeChecker.transform.position, holeCheckRadius);
     }
 
     // Update is called once per frame
