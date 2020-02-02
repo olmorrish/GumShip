@@ -225,17 +225,17 @@ public class GameController : MonoBehaviour {
         //Debug.Log("LowerBound: " + lowerSpawnBound);
         //Debug.Log("Distance: " + distanceTravelled);
         //Debug.Log("Spawn Distance: " + spawnDistance);
-        Debug.Log("UnderAttack? " + underAttack);
+        //Debug.Log("UnderAttack? " + underAttack);
 
         timeToDecay++;
         counter++;
-
+        /*
         if (counter > 120)
         {
             goWasPressed = true;
             counter = 0;
         }
-
+        */
         updateDistance();
 
         updateShipSpeed();
@@ -259,18 +259,18 @@ public class GameController : MonoBehaviour {
         if ((spawnDistance < distanceTravelled) && (underAttack == false))
         {
             underAttack = true;
-            Debug.Log("Why Arn't The Enemies Spawning Stephen?");
+
             enemyEncounter = new EnemyController(playerScore);
-            Debug.Log("Num Of Holes" + enemyEncounter.numberOfHolesCreated);
+            //Debug.Log("Num Of Holes" + enemyEncounter.numberOfHolesCreated);
 
             for (int i = 0; i < 3; i++)
             {
-                Debug.Log("Attackers: " + enemyEncounter.attacking[i]);
+               // Debug.Log("Attackers: " + enemyEncounter.attacking[i]);
             }
 
             for (int i = 0; i < 3; i++)
             {
-                Debug.Log("Typers: " + enemyEncounter.typesOfEnemiesInSlots[i]);
+               // Debug.Log("Typers: " + enemyEncounter.typesOfEnemiesInSlots[i]);
             }
 
             setEnemySprites(enemyEncounter.attacking, enemyEncounter.typesOfEnemiesInSlots);
@@ -309,15 +309,22 @@ public class GameController : MonoBehaviour {
 
     // Ship accelerates 5x faster then it decelerates
     void updateShipSpeed() {
-        Debug.Log("Time To Decay" + timeToDecay);
-        Debug.Log("Ship Speed" + shipSpeed);
-        if (goWasPressed) {
-            Debug.Log("GOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO");
-            shipSpeed += 5;
+
+        if (shipSpeed < 0)
+        {
+            shipSpeed = 0;
         }
-        else if(shipSpeed > 0 && (timeToDecay > 120)){
-            Debug.Log("We Hit The Decay");
-            shipSpeed -= 1;
+
+        //Debug.Log("Time To Decay" + timeToDecay);
+       // Debug.Log("Ship Speed" + shipSpeed);
+        if (goWasPressed) {
+          //  Debug.Log("GOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO");
+            shipSpeed += 0.1f;
+            goWasPressed = false;
+        }
+        else if(shipSpeed > 0){
+          //  Debug.Log("We Hit The Decay");
+            shipSpeed -= 0.01f;
             timeToDecay = 0;
         }
     }
@@ -334,8 +341,10 @@ public class GameController : MonoBehaviour {
 
     // How fast enemies spawn should ne a function of the player score
     void updateEnemySpawnRates() {
-        lowerSpawnBound = 80 / playerScore;
-        upperSpawnBound = 100 / playerScore;
+        //lowerSpawnBound = 80 / playerScore;
+        //upperSpawnBound = 100 / playerScore;
+        lowerSpawnBound = 80;
+        upperSpawnBound = 100;
     }
 
     void setEnemySprites(bool[] attacking, int[] activeEnemies)
@@ -565,6 +574,7 @@ public class GameController : MonoBehaviour {
         if (blastWasPressed)
         {
             currentGunCharge++;
+            blastWasPressed = false;
         }
 
         if (currentGunCharge == 5)
