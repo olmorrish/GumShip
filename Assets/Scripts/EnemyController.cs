@@ -226,7 +226,7 @@ public class EnemyController
     {
         nextHit++;
 
-        if (nextHit > 180)  //for now one hit every ~3 seconds
+        if (nextHit > 500)  //for now one hit every ~3 seconds
         {
             nextHit = 0;    //reset nexthit
 
