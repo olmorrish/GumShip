@@ -10,6 +10,7 @@ public class PlayerController : MonoBehaviour
     private Animator animPlayer;
     public GameObject gumOverlay;
     private Animator animGum;
+    private AudioSource asrc;
 
     public GameObject gameControllerObj;
     private GameController controller;
@@ -59,6 +60,7 @@ public class PlayerController : MonoBehaviour
         animDispenser = bubbleGumDispenser.GetComponent<Animator>();
         animGoButton = goButton.GetComponent<Animator>();
         animFireButton = fireButton.GetComponent<Animator>();
+        asrc = gameObject.GetComponent<AudioSource>();
 
         chewsUntilSticky = chewsToStickyMax;
 
@@ -179,6 +181,7 @@ public class PlayerController : MonoBehaviour
                 Debug.Log("SpaceBar hit -> Player is chewing gum.");
                 animPlayer.SetBool("isChewing", true);
                 animGum.SetBool("isChewing", true);
+                asrc.Play(); // PLAY CHEW SOUND
                 if (chewsUntilSticky > 0)
                 {
                     chewsUntilSticky--;
