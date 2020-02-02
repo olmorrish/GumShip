@@ -22,6 +22,9 @@ public class GameController : MonoBehaviour {
     public bool blastWasPressed;
     public int fillHole;
 
+    private int timeToDecay;
+
+    private bool underAttack;
 
     public float distanceTravelled;
     public int playerScore;
@@ -33,6 +36,7 @@ public class GameController : MonoBehaviour {
     private int lowerSpawnBound;
     private int upperSpawnBound;
 
+    int counter = 0;
 
     // Goes from 100 to 0 
     public int oxygenLevel;
@@ -136,6 +140,9 @@ public class GameController : MonoBehaviour {
 
     // Start is called before the first frame update
     void Start() {
+
+        underAttack = false;
+
         slow_anim_1 = slow_obj_1.GetComponent<Animator>();
         slow_anim_2 = slow_obj_2.GetComponent<Animator>();
         slow_anim_3 = slow_obj_3.GetComponent<Animator>();
@@ -193,6 +200,8 @@ public class GameController : MonoBehaviour {
 
         oxy_tank_anim.SetInteger("TankLevel", oxygenLevel);
 
+        timeToDecay = 0;
+
         updateSpawnDistance();
 
         slow_anim_1.SetInteger("slow1", slow1);
@@ -212,13 +221,28 @@ public class GameController : MonoBehaviour {
 
     void FixedUpdate(){
 
+        //Debug.Log("UpperBound: " + upperSpawnBound);
+        //Debug.Log("LowerBound: " + lowerSpawnBound);
+        //Debug.Log("Distance: " + distanceTravelled);
+        //Debug.Log("Spawn Distance: " + spawnDistance);
+        Debug.Log("UnderAttack? " + underAttack);
+
+        timeToDecay++;
+        counter++;
+
+        if (counter > 120)
+        {
+            goWasPressed = true;
+            counter = 0;
+        }
+
         updateDistance();
 
         updateShipSpeed();
         
         // This updates the enemy encounter
         // Should set correct enemy sprites to active
-        if (enemyEncounter != null)
+        if (underAttack)
         {
             enemyEncounter.updateAttack();
             setEnemySprites(enemyEncounter.attacking, enemyEncounter.typesOfEnemiesInSlots);
@@ -232,9 +256,23 @@ public class GameController : MonoBehaviour {
             }
         }
 
-        if ((distanceTravelled < spawnDistance) && (enemyEncounter == null))
+        if ((spawnDistance < distanceTravelled) && (underAttack == false))
         {
+            underAttack = true;
+            Debug.Log("Why Arn't The Enemies Spawning Stephen?");
             enemyEncounter = new EnemyController(playerScore);
+            Debug.Log("Num Of Holes" + enemyEncounter.numberOfHolesCreated);
+
+            for (int i = 0; i < 3; i++)
+            {
+                Debug.Log("Attackers: " + enemyEncounter.attacking[i]);
+            }
+
+            for (int i = 0; i < 3; i++)
+            {
+                Debug.Log("Typers: " + enemyEncounter.typesOfEnemiesInSlots[i]);
+            }
+
             setEnemySprites(enemyEncounter.attacking, enemyEncounter.typesOfEnemiesInSlots);
         }
 
@@ -245,7 +283,7 @@ public class GameController : MonoBehaviour {
         // All enemy sprites should be turned off
         if (gunReady)
         {
-            enemyEncounter = null;
+            underAttack = false;
             //animator.setBool("Blast", true);
             clearEnemySprites();
             updateEnemySpawnRates();
@@ -257,7 +295,6 @@ public class GameController : MonoBehaviour {
         updateHoleSprites();
         updateEnemySprites();
         updateOxygen();
-        updateEnemySpawnRates();
 
     }
 
@@ -272,11 +309,16 @@ public class GameController : MonoBehaviour {
 
     // Ship accelerates 5x faster then it decelerates
     void updateShipSpeed() {
+        Debug.Log("Time To Decay" + timeToDecay);
+        Debug.Log("Ship Speed" + shipSpeed);
         if (goWasPressed) {
+            Debug.Log("GOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO");
             shipSpeed += 5;
         }
-        else if(shipSpeed > 0){
+        else if(shipSpeed > 0 && (timeToDecay > 120)){
+            Debug.Log("We Hit The Decay");
             shipSpeed -= 1;
+            timeToDecay = 0;
         }
     }
 
@@ -446,6 +488,18 @@ public class GameController : MonoBehaviour {
 
     private void updateEnemySprites()
     {
+        Debug.Log("Slow1: " + slow1);
+        Debug.Log("Slow2: " + slow2);
+        Debug.Log("Slow3: " + slow3);
+
+        Debug.Log("Med1: " + med1);
+        Debug.Log("Med2: " + med2);
+        Debug.Log("Med3: " + med3);
+
+        Debug.Log("Fast1: " + fast1);
+        Debug.Log("Fast2: " + fast2);
+        Debug.Log("Fast3: " + fast3);
+
         slow_anim_1.SetInteger("slow1", slow1);
         slow_anim_2.SetInteger("slow2", slow2);
         slow_anim_3.SetInteger("slow3", slow3);
