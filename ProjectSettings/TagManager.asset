@@ -5,6 +5,11 @@ TagManager:
   serializedVersion: 2
   tags:
   - Score
+  - GameOverPanel
+  - RetryButton
+  - QuitButton
+  - GameOverText
+  - ScoreEndGame
   layers:
   - Default
   - TransparentFX

@@ -1,7 +1,8 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
-using UnityEngine.UI;
 using UnityEngine;
+using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class GameController : MonoBehaviour {
 
@@ -146,12 +147,25 @@ public class GameController : MonoBehaviour {
     private Animator fast_anim_2;
     private Animator fast_anim_3;
 
+    public AudioSource asrc;
+    public AudioSource dasrc;
+
+    public GameObject retry;
+    public GameObject quit;
+    public GameObject gameOverText;
+    public GameObject gameOverScoreText;
+
     // Start is called before the first frame update
     void Start() {
-
+        Time.timeScale = 1;
         oxyCounter = 0;
 
         underAttack = false;
+
+        retry.SetActive(false);
+        quit.SetActive(false);
+        gameOverText.SetActive(false);
+        gameOverScoreText.GetComponent<Text>().color = new Color(0,0,0,0);
 
         slow_anim_1 = slow_obj_1.GetComponent<Animator>();
         slow_anim_2 = slow_obj_2.GetComponent<Animator>();
@@ -221,6 +235,7 @@ public class GameController : MonoBehaviour {
         fast_anim_1.SetInteger("fast1", fast1);
         fast_anim_2.SetInteger("fast2", fast2);
         fast_anim_3.SetInteger("fast3", fast3);
+
     }
 
     // Update is called once per frame
@@ -237,6 +252,7 @@ public class GameController : MonoBehaviour {
         timeToDecay++;
         counter++;
         scoreText.text = playerScore.ToString();
+        gameOverScoreText.GetComponent<Text>().text = playerScore.ToString();
         /*
         if (counter > 120)
         {
@@ -604,6 +620,27 @@ public class GameController : MonoBehaviour {
             oxy_tank_anim.SetInteger("TankLevel", oxygenLevel);
 
         }
+
+        if (oxygenLevel <= 0)
+            GameOver();
+    }
+
+    public void RetryGame() {
+        SceneManager.LoadScene(1);
+    }
+
+    public void QuitGame() {
+        Application.Quit();
+    }
+
+    private void GameOver() {
+        GameObject.FindGameObjectWithTag("GameOverPanel").GetComponent<Image>().color = new Color(0,0,0,217);
+        gameOverScoreText.GetComponent<Text>().color = new Color(255,109,213,255);
+        retry.SetActive(true);
+        quit.SetActive(true);
+        gameOverText.SetActive(true);
+        ChangeToDeathSong();
+        Time.timeScale = 0;
     }
 
     public void updateGunCharge()
@@ -692,6 +729,11 @@ public class GameController : MonoBehaviour {
         {
             return false;
         }
+    }
+
+    private void ChangeToDeathSong() {
+        asrc.Stop();
+        dasrc.Play();
     }
 
     /*void OnGUI()
