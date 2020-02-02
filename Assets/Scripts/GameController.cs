@@ -249,13 +249,13 @@ public class GameController : MonoBehaviour {
         if (underAttack)
         {
             enemyEncounter.updateAttack();
-            /*
-            Debug.Log("NUMBER OF HOLES CREATED: " + enemyEncounter.numberOfHolesCreated);
+            
+           // Debug.Log("NUMBER OF HOLES CREATED: " + enemyEncounter.numberOfHolesCreated);
             for (int i = 0; i < 3; i++)
             {
-                Debug.Log("Attackers: " + enemyEncounter.attacking[i]);
+                //Debug.Log("Attackers: " + enemyEncounter.attacking[i]);
             }
-            */
+            
             setEnemySprites(enemyEncounter.attacking, enemyEncounter.typesOfEnemiesInSlots);
             if (enemyEncounter.numberOfHolesCreated > 0)
             {
