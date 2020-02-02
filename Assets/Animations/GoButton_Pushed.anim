@@ -6,7 +6,7 @@ AnimationClip:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Hole_BubbleGummed
+  m_Name: GoButton_Pushed
   serializedVersion: 6
   m_Legacy: 0
   m_Compressed: 0
@@ -20,10 +20,14 @@ AnimationClip:
   m_PPtrCurves:
   - curve:
     - time: 0
-      value: {fileID: -8735640846312653318, guid: d0b3606ac68f48047875b25be10ac817,
+      value: {fileID: -8455003921821170513, guid: d7386f8d3a1673941b90c827aa527722,
         type: 3}
     - time: 0.083333336
-      value: {fileID: 21300000, guid: 7d0fa0996ec0b7c4ca2bdf12c69fd95a, type: 3}
+      value: {fileID: -302054763128148559, guid: d7386f8d3a1673941b90c827aa527722,
+        type: 3}
+    - time: 0.16666667
+      value: {fileID: 8667323078146383066, guid: d7386f8d3a1673941b90c827aa527722,
+        type: 3}
     attribute: m_Sprite
     path: 
     classID: 212
@@ -43,19 +47,20 @@ AnimationClip:
       customType: 23
       isPPtrCurve: 1
     pptrCurveMapping:
-    - {fileID: -8735640846312653318, guid: d0b3606ac68f48047875b25be10ac817, type: 3}
-    - {fileID: 21300000, guid: 7d0fa0996ec0b7c4ca2bdf12c69fd95a, type: 3}
+    - {fileID: -8455003921821170513, guid: d7386f8d3a1673941b90c827aa527722, type: 3}
+    - {fileID: -302054763128148559, guid: d7386f8d3a1673941b90c827aa527722, type: 3}
+    - {fileID: 8667323078146383066, guid: d7386f8d3a1673941b90c827aa527722, type: 3}
   m_AnimationClipSettings:
     serializedVersion: 2
     m_AdditiveReferencePoseClip: {fileID: 0}
     m_AdditiveReferencePoseTime: 0
     m_StartTime: 0
-    m_StopTime: 0.16666667
+    m_StopTime: 0.25
     m_OrientationOffsetY: 0
     m_Level: 0
     m_CycleOffset: 0
     m_HasAdditiveReferencePose: 0
-    m_LoopTime: 0
+    m_LoopTime: 1
     m_LoopBlend: 0
     m_LoopBlendOrientation: 0
     m_LoopBlendPositionY: 0

@@ -13,6 +13,15 @@ public class PlayerController : MonoBehaviour
     public GameObject gameControllerObj;
     private GameController controller;
 
+    //SO MANY GAMEOBJECTS FFS
+    public GameObject bubbleGumDispenser;
+    private Animator animDispenser;
+    public GameObject goButton;
+    private Animator animGoButton;
+    public GameObject fireButton;
+    private Animator animFireButton;
+
+
     //movement variables
     public float thrust;
     public float rotationalTorque;
@@ -23,7 +32,7 @@ public class PlayerController : MonoBehaviour
     public int chewsUntilSticky;
     public int numberGumballs = 0;
     private bool hasGumInMouth = false; //unique animation
-    public int chewCountdown = 72;
+    //public int chewCountdown = 72;
 
     //hole detection variables
     private bool holeToPlug = false;
@@ -42,6 +51,9 @@ public class PlayerController : MonoBehaviour
     // Start is called before the first frame update
     void Start(){
         controller = gameControllerObj.GetComponent<GameController>();
+        animDispenser = bubbleGumDispenser.GetComponent<Animator>();
+        animGoButton = goButton.GetComponent<Animator>();
+        animFireButton = fireButton.GetComponent<Animator>();
 
         chewsUntilSticky = chewsToStickyMax;
 
@@ -79,32 +91,21 @@ public class PlayerController : MonoBehaviour
         //Thrust movement
         if (Input.GetKey(KeyCode.W)) {
             rb.AddRelativeForce(Vector2.up * thrust);
-            animPlayer.SetBool("isMoving", true);
-            animGum.SetBool("isMoving", true);
-
         }
         else if (Input.GetKey(KeyCode.S)) {
             rb.AddRelativeForce(Vector2.down * thrust);
-            animPlayer.SetBool("isMoving", true);
-            animGum.SetBool("isMoving", true);
         }
 
         //Rotation movement
         if (Input.GetKey(KeyCode.A)) {
             rb.AddTorque(rotationalTorque * 1, ForceMode2D.Force);
-            animPlayer.SetBool("isMoving", true);
-            animGum.SetBool("isMoving", true);
         }
         else if (Input.GetKey(KeyCode.D)) {
             rb.AddTorque(rotationalTorque * -1, ForceMode2D.Force);
-            animPlayer.SetBool("isMoving", true);
-            animGum.SetBool("isMoving", true);
         }
 
         //special case for idle animation update
         if(rb.velocity.magnitude < 0.1) {
-            animPlayer.SetBool("isMoving", false);
-            animGum.SetBool("isMoving", false);
         }
 
         //All interactions via SpaceBar
@@ -135,6 +136,7 @@ public class PlayerController : MonoBehaviour
             else if(col.IsTouching(defensesCol)){
                 Debug.Log("SpaceBar hit -> Player is activating defenses.");
                 animGum.SetBool("isInteracting", true);
+                animFireButton.SetBool("isPushed", true);
                 controller.blastWasPressed = true;
             }
 
@@ -142,6 +144,7 @@ public class PlayerController : MonoBehaviour
             else if (col.IsTouching(steeringCol)) {
                 Debug.Log("SpaceBar hit -> Player is piloting ship.");
                 animGum.SetBool("isInteracting", true);
+                animGoButton.SetBool("isPushed", true);
                 controller.goWasPressed = true;
             }
 
@@ -149,6 +152,7 @@ public class PlayerController : MonoBehaviour
             else if (col.IsTouching(gumDispenserCol) && (numberGumballs < maxGumballs)) { 
                 Debug.Log("SpaceBar hit -> Player is getting a new gumball from the dispenser.");
                 animGum.SetBool("isInteracting", true);
+                animDispenser.SetBool("Dispensing", true);
                 numberGumballs++;
             }
 
@@ -156,8 +160,7 @@ public class PlayerController : MonoBehaviour
             else{
                 Debug.Log("SpaceBar hit -> Player is chewing gum.");
                 animPlayer.SetBool("isChewing", true);
-                animGum.SetBool("isChewing", true);
-                
+                animGum.SetBool("isChewing", true);   
                 if (chewsUntilSticky > 0) {
                     chewsUntilSticky--;
                 }
@@ -166,14 +169,17 @@ public class PlayerController : MonoBehaviour
 
         }
         else {  //Space is not hit, so the player cannot be chewing or interacting with anything
-            
             animPlayer.SetBool("isInteracting", false);   //TODO ensure this doesn't break shit
             animPlayer.SetBool("isDunking", false);       //TODO ensure this doesn't break shit
             animPlayer.SetBool("isChewing", false);
-            
+
             animGum.SetBool("isInteracting", false);   //TODO ensure this doesn't break shit
             animGum.SetBool("isDunking", false);       //TODO ensure this doesn't break shit
             animGum.SetBool("isChewing", false);
+
+            animDispenser.SetBool("Dispensing", false);
+            animGoButton.SetBool("isPushed", false);
+            animFireButton.SetBool("isPushed", false);
         }
     }
 }
