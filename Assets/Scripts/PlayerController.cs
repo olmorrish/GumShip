@@ -10,6 +10,9 @@ public class PlayerController : MonoBehaviour
     public GameObject gumOverlay;
     private Animator animGum;
 
+    public GameObject gameControllerObj;
+    private GameController controller;
+
     //movement variables
     public float thrust;
     public float rotationalTorque;
@@ -38,6 +41,8 @@ public class PlayerController : MonoBehaviour
 
     // Start is called before the first frame update
     void Start(){
+        controller = gameControllerObj.GetComponent<GameController>();
+
         chewsUntilSticky = chewsToStickyMax;
 
         rb = GetComponent<Rigidbody2D>();
@@ -129,18 +134,21 @@ public class PlayerController : MonoBehaviour
             //3. Fire defense system
             else if(col.IsTouching(defensesCol)){
                 Debug.Log("SpaceBar hit -> Player is activating defenses.");
-                //TODO what do do when interacting with defenses
+                animGum.SetBool("isInteracting", true);
+                controller.blastWasPressed = true;
             }
 
             //4. Speed up the ship
             else if (col.IsTouching(steeringCol)) {
                 Debug.Log("SpaceBar hit -> Player is piloting ship.");
-                //TODO what do do when interacting with steering/speedup
+                animGum.SetBool("isInteracting", true);
+                controller.goWasPressed = true;
             }
 
             //5. Collect more gumballs
             else if (col.IsTouching(gumDispenserCol) && (numberGumballs < maxGumballs)) { 
                 Debug.Log("SpaceBar hit -> Player is getting a new gumball from the dispenser.");
+                animGum.SetBool("isInteracting", true);
                 numberGumballs++;
             }
 
