@@ -93,6 +93,11 @@ public class PlayerController : MonoBehaviour
         foreach (Collider2D col in belowPlayerCollisions) {
             Debug.Log("Hole collision activated.");
             if (whatIsHole.Contains(col.gameObject.layer)) {  //utilizes extension method!
+                Debug.Log(col.gameObject);
+                //Changes
+                bool hello = controller.canBeFilled(col.gameObject.name);
+               // bool hello = gameControllerObj.canBeFilled("hello");
+                //
                 holeToPlug = true;
             }
             else {
@@ -130,7 +135,6 @@ public class PlayerController : MonoBehaviour
                 animGum.SetBool("isDunking", true);
                 animGum.SetBool("hasGumInMouth", false);
                 hasGumInMouth = false;
-                //TODO interaction with the hole object
             }
 
             //3. Fire defense system
