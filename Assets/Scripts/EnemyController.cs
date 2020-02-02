@@ -244,7 +244,7 @@ public class EnemyController
         }
 
 
-        if((nextHit % 100 == 0) && numOfNarwhals > 0)   //narwhal shoot
+        if((nextHit % 200 == 0) && numOfNarwhals > 0)   //narwhal shoot
         {
             for(int i = 0; i < 3; i++)
             {
@@ -256,7 +256,7 @@ public class EnemyController
             }
         }
         
-        if((nextHit % 300 == 0) && numOfHammerHeads > 0)
+        if((nextHit % 400 == 0) && numOfHammerHeads > 0)
         {
             for (int i = 0; i < 3; i++)
             {
@@ -269,7 +269,7 @@ public class EnemyController
 
         }
 
-        if((nextHit % 500 == 0) && numberOfWhales > 0)
+        if((nextHit % 600 == 0) && numberOfWhales > 0)
         {
             for (int i = 0; i < 3; i++)
             {
