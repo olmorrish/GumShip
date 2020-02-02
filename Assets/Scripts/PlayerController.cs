@@ -46,9 +46,13 @@ public class PlayerController : MonoBehaviour
     private Collider2D gumDispenserCol;
 
     public Text textObject;
+    public GameObject bubbleUI;
+    private Animator animBubbleUI;
     
     // Start is called before the first frame update
     void Start(){
+        animBubbleUI = bubbleUI.GetComponent<Animator>();
+
         controller = gameControllerObj.GetComponent<GameController>();
         animDispenser = bubbleGumDispenser.GetComponent<Animator>();
         animGoButton = goButton.GetComponent<Animator>();
@@ -77,6 +81,7 @@ public class PlayerController : MonoBehaviour
 
         //update text
         textObject.text = chewsUntilSticky.ToString();
+        animBubbleUI.SetInteger("chewsLeft", chewsUntilSticky);
 
         //default animator resets
         animPlayer.SetBool("isGettingGum", false);
