@@ -7,6 +7,47 @@ public class EnemyController
 
     public float numberOfHolesCreated = 0;
 
+    private ArrayList possibleEncountersTypes = new ArrayList();
+    private ArrayList possibleEncountersStats = new ArrayList();
+
+    private int[] encounter1Types = { 1, 1, 1};
+    private bool[] encounter1Stat = { true, true, true };
+
+    private int[] encounter2Types = { 2, 2, 2 };
+    private bool[] encounter2Stat = { true, true, true };
+
+    private int[] encounter3Types = { 3, 3, 3 };
+    private bool[] encounter3Stat = { true, true, true };
+
+    private int[] encounter4Types = { 2, 1, 1 };
+    private bool[] encounter4Stat = { true, true, true };
+
+    private int[] encounter5Types = { 2, 1, 2 };
+    private bool[] encounter5Stat = { true, true, true };
+
+    private int[] encounter6Types = { 2, 2, 3 };
+    private bool[] encounter6Stat = { true, true, true };
+
+    private int[] encounter7Types = { 1, 2, 3 };
+    private bool[] encounter7Stat = { true, true, true };
+
+    private int[] encounter8Types = { 1, 1, 3 };
+    private bool[] encounter8Stat = { true, true, true };
+
+    private int[] encounter9Types = { 0, 3, 1 };
+    private bool[] encounter9Stat = { false, true, true };
+
+    private int[] encounter10Types = { 1, 0, 3 };
+    private bool[] encounter10Stat = { true, false, true };
+
+    private int[] encounter11Types = { 3, 0, 2 };
+    private bool[] encounter11Stat = { true, false, true };
+
+    private int[] encounter12Types = { 2, 2, 1 };
+    private bool[] encounter12Stat = { true, true, true };
+
+
+
     int nextHit = 0;
 
     public bool[] attacking = { false, false, false };
@@ -24,6 +65,29 @@ public class EnemyController
     //creates the class, this will start the encounter as soon as its constructed
     public EnemyController(float distance)
     {
+        possibleEncountersTypes.Add(encounter1Types);
+        possibleEncountersTypes.Add(encounter2Types);
+        possibleEncountersTypes.Add(encounter3Types);
+        possibleEncountersTypes.Add(encounter4Types);
+        possibleEncountersTypes.Add(encounter5Types);
+        possibleEncountersTypes.Add(encounter6Types);
+        possibleEncountersTypes.Add(encounter7Types);
+        possibleEncountersTypes.Add(encounter8Types);
+        possibleEncountersTypes.Add(encounter9Types);
+        possibleEncountersTypes.Add(encounter10Types);
+        possibleEncountersTypes.Add(encounter11Types);
+
+        possibleEncountersStats.Add(encounter1Stat);
+        possibleEncountersStats.Add(encounter2Stat);
+        possibleEncountersStats.Add(encounter3Stat);
+        possibleEncountersStats.Add(encounter4Stat);
+        possibleEncountersStats.Add(encounter5Stat);
+        possibleEncountersStats.Add(encounter6Stat);
+        possibleEncountersStats.Add(encounter7Stat);
+        possibleEncountersStats.Add(encounter8Stat);
+        possibleEncountersStats.Add(encounter9Stat);
+        possibleEncountersStats.Add(encounter10Stat);
+        possibleEncountersStats.Add(encounter11Stat);
         this.setup(distance);
         this.createEncounter();
     }
@@ -51,6 +115,18 @@ public class EnemyController
     /// </summary>
     void createEncounter()
     {
+        int encounterIndex = Random.Range(0, 12);
+
+        //int[] tempType = (int[])possibleEncountersTypes[encounterIndex];
+
+        //possibleEncountersTypes[encounterIndex].CopyTo(typesOfEnemiesInSlots);
+        //possibleEncountersStats[encounterIndex].CopyTo(attacking);
+
+
+        attacking = (bool[])possibleEncountersStats[encounterIndex];
+        typesOfEnemiesInSlots = (int[])possibleEncountersTypes[encounterIndex];
+
+/*
         int numOfNarwhals;
         int numOfHammerheads;
         int totalNumOfEnemies;
@@ -74,148 +150,7 @@ public class EnemyController
             attacking[2] = false;
             typesOfEnemiesInSlots[2] = 0;
         }
-
-        
-        /*if (currentDistance < 500) //easy, only narwhals 1-3 with a bias to 1
-        {
-            numOfNarwhals = Random.Range(1, 3);
-            bias = Random.Range(1, 2);
-
-            numOfNarwhals -= bias;
-
-            totalNumOfEnemies = numOfNarwhals;
-
-            //check to make sure we still have at least 1 enemy
-            if(totalNumOfEnemies < 1)
-            {
-                totalNumOfEnemies = 1;
-            }
-
-            //assign attacking enemy to vars
-            for(int i = 0; i < totalNumOfEnemies; i++)
-            {
-                typesOfEnemiesInSlots[i] = 1;   //just narwhals
-            }
-
-        }
-        else if(currentDistance < 1000) //medium mix of narwhals and hammerheads with a bias towards narwhals
-        {
-            numOfNarwhals = Random.Range(2, 3);
-            numOfHammerheads = 0;
-
-            if(numOfNarwhals < 3)   //room for hammerhead
-            {
-                if(Random.Range(1, 2) == 1) //50% chance hammerhead spawns
-                {
-                    numOfHammerheads = 3 - numOfNarwhals;
-                }
-                
-            }
-
-            totalNumOfEnemies = numOfHammerheads + numOfNarwhals;
-
-            //place into vars
-            for(int i = 0; i < totalNumOfEnemies; i++)
-            {
-                //distribute narwhals and hammerheads across the slots
-                if(numOfNarwhals > 0)
-                {
-                    typesOfEnemiesInSlots[i] = 1;
-                    numOfNarwhals--;
-                }
-                else if(numOfHammerheads > 0)
-                {
-                    typesOfEnemiesInSlots[i] = 2;
-                    numOfHammerheads--;
-                }
-            }
-
-            
-
-        }
-        else if(currentDistance < 1500) //hard mix of narwhals and hammerheads, bias towards hammerheads
-        {
-            numOfNarwhals = Random.Range(1, 3);
-            bias = Random.Range(1, 3);
-
-            numOfNarwhals -= bias;
-
-            if(numOfNarwhals < 0)
-            {
-                numOfNarwhals = 0;
-            }
-
-            //guarenteed to be no greater than 2 narwhals
-            numOfHammerheads = 3 - numOfNarwhals;
-
-            totalNumOfEnemies = numOfNarwhals + numOfHammerheads;
-
-            for(int i = 0; i < totalNumOfEnemies; i++)
-            {
-                if(numOfNarwhals > 0)
-                {
-                    typesOfEnemiesInSlots[i] = 1;
-                    numOfNarwhals--;
-                }
-                else if(numOfHammerheads > 0)
-                {
-                    typesOfEnemiesInSlots[i] = 2;
-                    numOfHammerheads--;
-                }
-            }
-
-        }
-        else    //expert similar to hard but with a chance to spawn 1 whale
-        {
-            int numOfWhale = 0;
-
-            numOfNarwhals = Random.Range(1, 2);
-            bias = Random.Range(1, 2);
-
-            numOfNarwhals -= bias;
-
-            if (numOfNarwhals < 0)
-            {
-                numOfNarwhals = 0;
-            }
-
-
-            //guarenteed to be no greater than 2 narwhals
-            numOfHammerheads = Random.Range(1, 3);
-
-            totalNumOfEnemies = numOfNarwhals + numOfHammerheads;
-            if(totalNumOfEnemies > 3)
-            {
-                numOfNarwhals = 0;
-                totalNumOfEnemies = numOfNarwhals + numOfHammerheads;
-            }
-
-            if(totalNumOfEnemies < 3)   //DEPLOY W H A L E
-            {
-                numOfWhale = 1;
-                totalNumOfEnemies += numOfWhale;
-            }
-
-
-            for (int i = 0; i < totalNumOfEnemies; i++)
-            {
-                if (numOfNarwhals > 0)
-                {
-                    typesOfEnemiesInSlots[i] = 1;
-                    numOfNarwhals--;
-                }
-                else if (numOfHammerheads > 0)
-                {
-                    typesOfEnemiesInSlots[i] = 2;
-                    numOfHammerheads--;
-                }
-                else if(numOfWhale > 0)
-                {
-                    typesOfEnemiesInSlots[i] = 3;
-                    numOfWhale--;
-                }
-            }
-        }*/
+*/
 
     }
 
