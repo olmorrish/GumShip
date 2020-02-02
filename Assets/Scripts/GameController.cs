@@ -62,6 +62,11 @@ public class GameController : MonoBehaviour {
     public int currentGunCharge;
     public bool gunReady;
 
+    // Hold Animation
+    private int slow1Hold;
+    private int slow2Hold;
+    private int slow3Hold;
+
     public EnemyController enemyEncounter;
 
     // Enemy Triggers
@@ -99,8 +104,6 @@ public class GameController : MonoBehaviour {
     public GameObject hole_obj_9;
     public GameObject hole_obj_10;
     public GameObject hole_obj_11;
-    //public GameObject hole_obj_12;
-    //public GameObject hole_obj_13;
 
     private Animator hole_anim_0;
     private Animator hole_anim_1;
@@ -114,8 +117,6 @@ public class GameController : MonoBehaviour {
     private Animator hole_anim_9;
     private Animator hole_anim_10;
     private Animator hole_anim_11;
-    //private Animator hole_anim_12;
-    //private Animator hole_anim_13;
 
     // Enemy Objects
     public GameObject slow_obj_1;
@@ -173,8 +174,6 @@ public class GameController : MonoBehaviour {
         hole_anim_9 = hole_obj_9.GetComponent<Animator>();
         hole_anim_10 = hole_obj_10.GetComponent<Animator>();
         hole_anim_11 = hole_obj_11.GetComponent<Animator>();
-        //hole_anim_12 = hole_obj_12.GetComponent<Animator>();
-        //hole_anim_13 = hole_obj_13.GetComponent<Animator>();
 
         oxy_tank_anim = oxy_tank_obj.GetComponent<Animator>();
 
@@ -192,8 +191,6 @@ public class GameController : MonoBehaviour {
         holesAnim[9] = hole_anim_9;
         holesAnim[10] = hole_anim_10;
         holesAnim[11] = hole_anim_11;
-        //holesAnim[12] = hole_anim_12;
-        //holesAnim[13] = hole_anim_13;
 
         goWasPressed = false;
         playerScore = 1;
@@ -365,8 +362,10 @@ public class GameController : MonoBehaviour {
         // First Enemy
         if (activeEnemies[0] == 1)
         {
+           // Debug.Log("In Attack Loop");
             if (attacking[0])
             {
+               // Debug.Log("In Attack Is Set");
                 // ATTACK
                 slow1 = 1;
                 attacking[0] = false;
@@ -510,6 +509,21 @@ public class GameController : MonoBehaviour {
 
     private void updateEnemySprites()
     {
+
+        if (slow1 == 1)
+        {
+            slow1Hold = 10;
+        }
+        if (slow1Hold > 0)
+        {
+            slow1Hold--;
+            slow_anim_1.SetInteger("slow1", 1);
+        }
+        else
+        {
+            slow_anim_1.SetInteger("slow1", slow1);
+        }
+
         //Debug.Log("Slow1: " + slow1);
         //Debug.Log("Slow2: " + slow2);
         //Debug.Log("Slow3: " + slow3);
@@ -522,7 +536,6 @@ public class GameController : MonoBehaviour {
         //Debug.Log("Fast2: " + fast2);
         //Debug.Log("Fast3: " + fast3);
 
-        slow_anim_1.SetInteger("slow1", slow1);
         slow_anim_2.SetInteger("slow2", slow2);
         slow_anim_3.SetInteger("slow3", slow3);
 
