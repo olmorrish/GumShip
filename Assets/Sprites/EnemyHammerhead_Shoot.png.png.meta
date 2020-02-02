@@ -1,19 +1,31 @@
 fileFormatVersion: 2
-guid: a943fac5e4013154b84fa6853f78ee98
+guid: 3aea46c1985815042b2d01a58a461162
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -3765857348995363404
-    second: EnemyHammerhead_Shoot_0
+      213: 1286243266262113900
+    second: EnemyHammerhead_Shoot.png_0
   - first:
-      213: -8739129775478324080
-    second: EnemyHammerhead_Shoot_1
+      213: -6437619241581055745
+    second: EnemyHammerhead_Shoot.png_1
   - first:
-      213: 4610151475748285515
-    second: EnemyHammerhead_Shoot_2
+      213: 2813600574615747883
+    second: EnemyHammerhead_Shoot.png_2
   - first:
-      213: 2878599467111041378
-    second: EnemyHammerhead_Shoot_3
+      213: -214860694435536672
+    second: EnemyHammerhead_Shoot.png_3
+  - first:
+      213: -6069323610816973130
+    second: EnemyHammerhead_Shoot.png_4
+  - first:
+      213: 2440555846265838693
+    second: EnemyHammerhead_Shoot.png_5
+  - first:
+      213: 5455844799174718239
+    second: EnemyHammerhead_Shoot.png_6
+  - first:
+      213: 5052917382501563275
+    second: EnemyHammerhead_Shoot.png_7
   externalObjects: {}
   serializedVersion: 10
   mipmaps:
@@ -75,7 +87,7 @@ TextureImporter:
     maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
-    textureCompression: 0
+    textureCompression: 1
     compressionQuality: 50
     crunchedCompression: 0
     allowsAlphaSplitting: 0
@@ -87,55 +99,7 @@ TextureImporter:
     maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
-    textureCompression: 0
-    compressionQuality: 50
-    crunchedCompression: 0
-    allowsAlphaSplitting: 0
-    overridden: 0
-    androidETC2FallbackOverride: 0
-    forceMaximumCompressionQuality_BC6H_BC7: 0
-  - serializedVersion: 3
-    buildTarget: Windows Store Apps
-    maxTextureSize: 2048
-    resizeAlgorithm: 0
-    textureFormat: -1
-    textureCompression: 0
-    compressionQuality: 50
-    crunchedCompression: 0
-    allowsAlphaSplitting: 0
-    overridden: 0
-    androidETC2FallbackOverride: 0
-    forceMaximumCompressionQuality_BC6H_BC7: 0
-  - serializedVersion: 3
-    buildTarget: iPhone
-    maxTextureSize: 2048
-    resizeAlgorithm: 0
-    textureFormat: -1
-    textureCompression: 0
-    compressionQuality: 50
-    crunchedCompression: 0
-    allowsAlphaSplitting: 0
-    overridden: 0
-    androidETC2FallbackOverride: 0
-    forceMaximumCompressionQuality_BC6H_BC7: 0
-  - serializedVersion: 3
-    buildTarget: Android
-    maxTextureSize: 2048
-    resizeAlgorithm: 0
-    textureFormat: -1
-    textureCompression: 0
-    compressionQuality: 50
-    crunchedCompression: 0
-    allowsAlphaSplitting: 0
-    overridden: 0
-    androidETC2FallbackOverride: 0
-    forceMaximumCompressionQuality_BC6H_BC7: 0
-  - serializedVersion: 3
-    buildTarget: WebGL
-    maxTextureSize: 2048
-    resizeAlgorithm: 0
-    textureFormat: -1
-    textureCompression: 0
+    textureCompression: 1
     compressionQuality: 50
     crunchedCompression: 0
     allowsAlphaSplitting: 0
@@ -146,7 +110,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: EnemyHammerhead_Shoot_0
+      name: EnemyHammerhead_Shoot.png_0
       rect:
         serializedVersion: 2
         x: 0
@@ -160,14 +124,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 4bd465681bcfcbbc0800000000000000
-      internalID: -3765857348995363404
+      spriteID: c6e9a449f67a9d110800000000000000
+      internalID: 1286243266262113900
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: EnemyHammerhead_Shoot_1
+      name: EnemyHammerhead_Shoot.png_1
       rect:
         serializedVersion: 2
         x: 64
@@ -181,14 +145,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 094439665cf58b680800000000000000
-      internalID: -8739129775478324080
+      spriteID: ff07752686bf8a6a0800000000000000
+      internalID: -6437619241581055745
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: EnemyHammerhead_Shoot_2
+      name: EnemyHammerhead_Shoot.png_2
       rect:
         serializedVersion: 2
         x: 128
@@ -202,14 +166,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: b4c28b0775c8aff30800000000000000
-      internalID: 4610151475748285515
+      spriteID: b2d7ec5c0daeb0720800000000000000
+      internalID: 2813600574615747883
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: EnemyHammerhead_Shoot_3
+      name: EnemyHammerhead_Shoot.png_3
       rect:
         serializedVersion: 2
         x: 192
@@ -223,8 +187,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 26948cfb6f6d2f720800000000000000
-      internalID: 2878599467111041378
+      spriteID: 0e0e9f73659a40df0800000000000000
+      internalID: -214860694435536672
       vertices: []
       indices: 
       edges: []
